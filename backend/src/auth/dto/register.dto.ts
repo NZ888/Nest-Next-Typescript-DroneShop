@@ -1,5 +1,6 @@
-import { IsEmail, IsNotEmpty, IsString, Length } from 'class-validator';
-
+import {IsEmail, IsEnum, IsNotEmpty, IsString, Length} from 'class-validator';
+import { Role } from '../../../generated/prisma/enums'
+import {Transform} from "class-transformer";
 export class RegisterDto {
   @IsNotEmpty()
   @IsString()
@@ -12,4 +13,8 @@ export class RegisterDto {
   @IsString()
   @Length(6, 50)
   password: string;
+  @IsNotEmpty()
+  @IsEnum(Role)
+  @Transform(({ value }) => value.toUpperCase())
+  role: string;
 }
