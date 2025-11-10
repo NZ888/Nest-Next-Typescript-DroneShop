@@ -21,5 +21,5 @@ export class RegisterDto {
   @IsNotEmpty()
   @IsEnum(Role)
   @Transform(({ value }) => value.toUpperCase())
-  role: string;
+  role: Role;
 }
