@@ -29,3 +29,30 @@ model Admin {
   user        User   @relation(fields: [id], references: [id])
   permissions String @map("Permissions") @db.Text
 }
+
+model Product {
+  id        Int       @id @default(autoincrement())
+  name      String
+  slug      String    @unique
+  price     Float
+  oldPrice  Float?
+  shortDesc String?
+  mainImage String?
+  gallery   String[]
+  videoUrl  String?
+  sections  Section[]
+  specs     Json?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Section {
+  id        Int     @id @default(autoincrement())
+  title     String?
+  text      String?
+  image     String?
+  video     String?
+  order     Int
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+}

@@ -4,9 +4,11 @@ import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
+import { JwtStrategy } from './jwt/jwt.strategy'; // 👈 добавь импорт
+
 @Module({
   imports: [
-    PassportModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }), // 👈 добавь defaultStrategy
     ConfigModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -18,6 +20,10 @@ import { AuthController } from './auth.controller';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [
+    AuthService,
+    JwtStrategy, // 👈 вот этого не хватало
+  ],
+  exports: [AuthService, JwtModule, PassportModule], // 👈 чтобы guard работал и в других модулях
 })
 export class AuthModule {}
