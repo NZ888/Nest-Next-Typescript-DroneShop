@@ -22,8 +22,8 @@ import { JwtStrategy } from './jwt/jwt.strategy'; // 👈 добавь импо�
   controllers: [AuthController],
   providers: [
     AuthService,
-    JwtStrategy, // 👈 вот этого не хватало
+    JwtStrategy,
   ],
-  exports: [AuthService, JwtModule, PassportModule], // 👈 чтобы guard работал и в других модулях
+  exports: [AuthService, JwtModule, PassportModule],
 })
 export class AuthModule {}

@@ -5,6 +5,8 @@ import {
   UseInterceptors,
   UploadedFiles,
   UseGuards,
+  Get,
+  Param, Patch, Delete,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from '@/auth/jwt/jwt-auth.guard';
@@ -14,6 +16,7 @@ import { CloudinaryService } from '@/cloudinary/cloudinary.service';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ApiBody, ApiOperation } from '@nestjs/swagger';
+import { UpdateProductDto } from '@/products/dto/update-product.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -98,6 +101,84 @@ export class ProductsController {
   @ApiBody({ type: CreateProductDto })
   createExample(@Body() body: CreateProductDto) {
     return body;
+  }
+  @Get()
+  async getAllProducts(){
+    return this.productsService.getAll();
+  }
+  @Get(":slug")
+  async getProductBySlug(@Param('slug') slug: string) {
+    return this.productsService.getProductBySlug(slug);
+  }
+  @Patch(':id')
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN)
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: 'mainImage', maxCount: 1 },
+      { name: 'gallery', maxCount: 10 },
+      { name: 'sectionImages', maxCount: 20 },
+    ]),
+  )
+  async updateProduct(
+    @Param('id') id: string,
+    @Body('data') data: string,
+    @UploadedFiles()
+    files: {
+      mainImage?: Express.Multer.File[];
+      gallery?: Express.Multer.File[];
+      sectionImages?: Express.Multer.File[];
+    },
+  ) {
+    const parsed: UpdateProductDto = data ? JSON.parse(data) : {};
+
+    let mainImage: string | undefined;
+    if (files.mainImage?.[0]) {
+      const uploaded = await this.cloudinaryService.uploadImage(
+        files.mainImage[0],
+      );
+      mainImage = uploaded.secure_url;
+    }
+
+    const gallery: string[] = [];
+    if (files.gallery?.length) {
+      for (const file of files.gallery) {
+        const uploaded = await this.cloudinaryService.uploadImage(file);
+        gallery.push(uploaded.secure_url);
+      }
+    }
+
+    let sections = parsed.sections || [];
+    if (sections.length && files.sectionImages?.length) {
+      sections = await Promise.all(
+        sections.map(async (section, index) => {
+          const file = files.sectionImages?.[index];
+          if (file) {
+            const uploaded = await this.cloudinaryService.uploadImage(file);
+            return {
+              ...section,
+              image: uploaded.secure_url,
+            };
+          }
+          return section;
+        }),
+      );
+    }
+
+    const updateData = {
+      ...parsed,
+      ...(mainImage ? { mainImage } : {}),
+      ...(gallery.length ? { gallery } : {}),
+      ...(sections.length ? { sections } : {}),
+    };
+
+    return this.productsService.updateProduct(+id, updateData);
+  }
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN)
+  async deleteProduct(@Param('id') id: string) {
+    return this.productsService.deleteProduct(+id);
   }
 
 }

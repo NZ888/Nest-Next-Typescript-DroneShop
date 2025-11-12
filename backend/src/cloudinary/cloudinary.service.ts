@@ -22,4 +22,22 @@ export class CloudinaryService {
       upload.end(file.buffer);
     });
   }
+  async deleteImage(publicId: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      cloudinary.uploader.destroy(publicId, (error, result) => {
+        if (error) return reject(error);
+        resolve();
+      });
+    });
+  }
+
+  extractPublicId(url: string): string | null {
+    try {
+      const parts = url.split('/');
+      const filename = parts[parts.length - 1];
+      return filename.split('.')[0];
+    } catch {
+      return null;
+    }
+  }
 }
