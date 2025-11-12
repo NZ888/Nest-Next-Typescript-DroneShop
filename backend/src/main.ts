@@ -7,6 +7,14 @@ import helmet from 'helmet';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(helmet());
+  app.enableCors({
+    origin: process.env.FRONTEND_URL ?? 'http://localhost:3000',
+    credentials: true,
+    methods: ['GET','POST','PUT','PATCH','DELETE'],
+    allowedHeaders: ['Content-Type','Authorization'],
+    exposedHeaders: ['Authorization'],
+  });
+
   app.useGlobalPipes(new ValidationPipe());
   const PORT = process.env.PORT || 3000;
 
