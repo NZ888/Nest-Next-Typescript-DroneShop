@@ -1,0 +1,40 @@
+.navigationContainer{
+    display: flex;
+    gap: 31px;
+}
+
+.navigation{
+    font-family: var(--font-manrope);
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: rgb(11, 14, 31);
+    text-align: center;
+    text-decoration: none;
+}
+
+@media (max-width: 1000px) {
+    .navigation{
+        font-size: 10px;
+
+    }
+    .navigationContainer{
+        gap: 16px;
+    }
+}
+@media (max-width: 730px) {
+    .navigation{
+        font-size: 8px;
+
+    }
+    .navigationContainer{
+        gap: 16px;
+    }
+}
+
+@media (max-width: 630px) {
+    .navigationContainer{
+        display: none;
+    }
+}

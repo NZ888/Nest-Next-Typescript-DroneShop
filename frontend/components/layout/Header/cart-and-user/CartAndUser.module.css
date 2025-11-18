@@ -1,0 +1,31 @@
+.cardAndUserContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    gap: 24px;
+}
+.cart{
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    cursor: pointer;
+}
+.burgerWrapper{
+    display: none;
+}
+@media (max-width: 630px) {
+    .cardAndUserContainer{
+        margin-right: 24px;
+    }
+    .burgerWrapper{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        right: 30px;
+    }
+}

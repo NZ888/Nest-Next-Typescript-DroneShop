@@ -1,0 +1,31 @@
+import React from 'react';
+import styles from "./CartAndUser.module.css";
+import {Badge} from "@/components/layout/Header/badge/Badge";
+import BurgerMenu from "@/components/layout/Header/burger/BurgerMenu";
+
+interface CartAndUserProps{
+    menuOpen:boolean;
+    toggleMenu:()=>void;
+}
+
+const CartAndUser: React.FC<CartAndUserProps> = ({ menuOpen, toggleMenu }) => {
+  return (
+      <div className={styles.cardAndUserContainer}>
+          <div className={styles.cart}>
+              <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M5.46447 1.46447C6.40215 0.526784 7.67392 0 9 0C10.3261 0 11.5979 0.526784 12.5355 1.46447C13.4732 2.40215 14 3.67392 14 5V6H16C16.5201 6 16.9534 6.39866 16.9965 6.91695L17.9965 18.917C18.0198 19.1956 17.9252 19.4713 17.7359 19.6771C17.5465 19.8829 17.2797 20 17 20H1C0.720351 20 0.453476 19.8829 0.264121 19.6771C0.0747659 19.4713 -0.0197664 19.1956 0.00345746 18.917L1.00346 6.91695C1.04665 6.39866 1.47991 6 2 6H4V5C4 3.67392 4.52679 2.40215 5.46447 1.46447ZM4 8V9C4 9.55229 4.44772 10 5 10C5.55229 10 6 9.55229 6 9V8H12V9C12 9.55229 12.4477 10 13 10C13.5523 10 14 9.55229 14 9V8H15.0799L15.9132 18H2.0868L2.92014 8H4ZM12 6H6V5C6 4.20435 6.31607 3.44129 6.87868 2.87868C7.44129 2.31607 8.20435 2 9 2C9.79565 2 10.5587 2.31607 11.1213 2.87868C11.6839 3.44129 12 4.20435 12 5V6Z" fill="#9EA0AA" style={{ fill: "color(display-p3 0.6196 0.6275 0.6667)", fillOpacity: "1" }} />
+              </svg>
+              <Badge value={1} top={-6} right={-9} />
+          </div>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{cursor:"pointer"}}>
+              <path fillRule="evenodd" clipRule="evenodd" d="M12 4C11.2044 4 10.4413 4.31607 9.87868 4.87868C9.31607 5.44129 9 6.20435 9 7C9 7.79565 9.31607 8.55871 9.87868 9.12132C10.4413 9.68393 11.2044 10 12 10C12.7956 10 13.5587 9.68393 14.1213 9.12132C14.6839 8.55871 15 7.79565 15 7C15 6.20435 14.6839 5.44129 14.1213 4.87868C13.5587 4.31607 12.7956 4 12 4ZM8.46447 3.46447C9.40215 2.52678 10.6739 2 12 2C13.3261 2 14.5979 2.52678 15.5355 3.46447C16.4732 4.40215 17 5.67392 17 7C17 8.32608 16.4732 9.59785 15.5355 10.5355C14.5979 11.4732 13.3261 12 12 12C10.6739 12 9.40215 11.4732 8.46447 10.5355C7.52678 9.59785 7 8.32608 7 7C7 5.67392 7.52678 4.40215 8.46447 3.46447ZM6.34315 15.3431C7.84344 13.8429 9.87827 13 12 13C14.1217 13 16.1566 13.8429 17.6569 15.3431C19.1571 16.8434 20 18.8783 20 21C20 21.5523 19.5523 22 19 22H5C4.73478 22 4.48043 21.8946 4.29289 21.7071C4.10536 21.5196 4 21.2652 4 21C4 18.8783 4.84285 16.8434 6.34315 15.3431ZM12 15C10.4087 15 8.88258 15.6321 7.75736 16.7574C6.87067 17.6441 6.29016 18.7797 6.08389 20H17.9161C17.7098 18.7797 17.1293 17.6441 16.2426 16.7574C15.1174 15.6321 13.5913 15 12 15Z" fill="#9EA0AA" style={{ fill: "#9EA0AA", fillOpacity: "1" }} />
+          </svg>
+
+          <div className={styles.burgerWrapper}>
+              <BurgerMenu isOpen={menuOpen} onToggle={toggleMenu}/>
+          </div>
+      </div>
+  );
+};
+
+export default CartAndUser;
