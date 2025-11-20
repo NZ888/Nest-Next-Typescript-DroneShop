@@ -41,10 +41,6 @@ const Header: React.FC<HeaderProps> = ({  }) => {
                   </div>
               )}
               <CartAndUser menuOpen={menuOpen} toggleMenu={toggleMenu}/>
-              {/*<div className={styles.burgerWrapper}>*/}
-              {/*    <BurgerMenu isOpen={menuOpen} onToggle={toggleMenu}/>*/}
-              {/*</div>*/}
-
           </div>
       </header>
   );

@@ -28,6 +28,7 @@ export default function RootLayout({
         suppressHydrationWarning
       >
         {children}
+        <div id="portal-root"></div>
       </body>
     </html>
   );

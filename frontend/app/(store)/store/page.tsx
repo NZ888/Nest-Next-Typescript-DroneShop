@@ -5,9 +5,9 @@ type StoreProps = object
 
 const Store: React.FC<StoreProps> = ({  }) => {
   return (
-    <div className="">
+    <>
       <Header/>
-    </div>
+    </>
   );
 };
 
