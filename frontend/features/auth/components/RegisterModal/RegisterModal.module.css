@@ -1,0 +1,66 @@
+.titleContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+}
+.titleContainer h3{
+    font-weight: 500;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 140%;
+    transition: color .1s ease;
+}
+.titleContainer span{
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 140%;
+    color: var(--blue-100);
+}
+.active {
+    color: #0C122A;
+}
+
+.inactive {
+    color: #B0B3BD;
+}
+
+.container{
+    min-width: 384px;
+}
+.formItem{
+    margin-top: 16px;
+}
+.formItem p{
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--blue-100);
+}
+.formItem input{
+    width: 100%;
+    border: 1px solid var(--blue-20);
+    border-radius: 4px;
+    padding: 0 16px;
+    height: 40px;
+}
+
+.error{
+    color: #e53935;
+    font-size: 14px;
+    margin-top: 4px;
+}
+.forgotPass{
+    margin-top: 16px;
+    font-weight: 400;
+    font-size: 14px;
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+    color: var(--blue-40);
+    cursor: pointer;
+}
+
+.btns{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

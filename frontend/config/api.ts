@@ -8,6 +8,9 @@ export const API = {
         auth:{
             login:"auth/login",
             register:"auth/register",
+            sendResetCode: "auth/send-reset-code",
+            verifyResetCode: "auth/verify-reset-code",
+            resetPassword: "auth/reset-password",
         }
     }
 }

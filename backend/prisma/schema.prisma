@@ -56,3 +56,12 @@ model Section {
   productId Int
   product   Product @relation(fields: [productId], references: [id])
 }
+
+model ResetCode {
+  email               String    @id
+  code                String
+  attempts            Int       @default(0)
+  resetToken          String?   @unique
+  resetTokenExpiresAt DateTime?
+  updatedAt           DateTime  @updatedAt
+}

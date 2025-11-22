@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
 import {site} from "@/config/site"
 import "@/styles/globals.css"
+import {QueryProvider} from "@/providers/query-provider";
 
 const manrope = Manrope({
     subsets: ["latin", "cyrillic"],
@@ -27,7 +28,7 @@ export default function RootLayout({
         className={`${manrope.variable} antialiased`}
         suppressHydrationWarning
       >
-        {children}
+      <QueryProvider>{children}</QueryProvider>
         <div id="portal-root"></div>
       </body>
     </html>

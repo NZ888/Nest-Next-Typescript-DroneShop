@@ -14,4 +14,16 @@ export class AuthController {
   async login(@Body() dto: LoginDto) {
     return await this.authService.login(dto);
   }
+  @Post('send-reset-code')
+  sendResetCode(@Body() body: {email: string}){
+    return this.authService.sendResetCode(body.email)
+  }
+  @Post('verify-reset-code')
+  verifyResetCode(@Body() body: {email: string; code: string}){
+    return this.authService.verifyResetCode(body.email, body.code)
+  }
+  @Post("reset-password")
+  resetPassword(@Body() body : { resetToken: string; newPassword: string }){
+    return this.authService.resetPassword(body.resetToken, body.newPassword)
+  }
 }

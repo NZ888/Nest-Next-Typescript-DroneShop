@@ -4,6 +4,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ProductsModule } from './products/products.module';
+import { MailModule } from './mail/mail.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -12,7 +13,8 @@ import { ProductsModule } from './products/products.module';
     PrismaModule,
     AuthModule,
     CloudinaryModule,
-    ProductsModule
+    ProductsModule,
+    MailModule
   ],
   controllers: [],
   providers: [],

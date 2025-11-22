@@ -4,11 +4,13 @@ import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { JwtStrategy } from './jwt/jwt.strategy'; // 👈 добавь импорт
+import { JwtStrategy } from './jwt/jwt.strategy';
+import {MailModule} from "@/mail/mail.module";
 
 @Module({
   imports: [
-    PassportModule.register({ defaultStrategy: 'jwt' }), // 👈 добавь defaultStrategy
+      MailModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     ConfigModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
