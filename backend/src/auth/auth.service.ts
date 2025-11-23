@@ -70,6 +70,7 @@ export class AuthService {
       update: { code, attempts: 0 },
     })
     await this.mail.sendResetCode(email, code)
+    return { message: "Код надіслано" };
   }
 
   async verifyResetCode(email: string, code: string){

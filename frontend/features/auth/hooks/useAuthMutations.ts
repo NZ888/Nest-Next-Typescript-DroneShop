@@ -1,11 +1,13 @@
 import { useMutation } from "@tanstack/react-query";
-import { sendResetCode, verifyResetCode, resetPassword } from "../services/auth.service"
+import { sendResetCode, verifyResetCode, resetPassword, login } from "../services/auth.service"
 
 export const useSendResetCode = () => {
     return useMutation({
-        mutationFn: (email: string) => sendResetCode(email),
-    })
-}
+        mutationFn: (data: { email: string }) => sendResetCode(data.email),
+    });
+};
+
+
 export const useVerifyResetCode = () => {
     return useMutation({
         mutationFn: (data: { email: string; code: string }) =>
@@ -18,3 +20,8 @@ export const useResetPassword = () => {
             resetPassword(data.resetToken, data.newPassword),
     });
 };
+export const useLogin = () => {
+    return useMutation({
+        mutationFn: (data: { email: string; password: string }) => login(data.email, data.password),
+    })
+}
