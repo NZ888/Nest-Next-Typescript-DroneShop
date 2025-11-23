@@ -25,7 +25,6 @@ export default function RegisterModal({ isOpen, setIsOpen }: RegisterModalProps)
     const [screen, setScreen] = React.useState<
         "login" | "register" | "reset" | "verify" | "newPassword"
     >("login");
-
     const goToLogin = () => setScreen("login");
     const goToRegister = () => setScreen("register");
     const goToReset = () => setScreen("reset");
@@ -46,6 +45,9 @@ export default function RegisterModal({ isOpen, setIsOpen }: RegisterModalProps)
                     message: err.message,
                 });
             },
+            onSuccess: () => {
+                setIsOpen(false);
+            }
         });
     };
 

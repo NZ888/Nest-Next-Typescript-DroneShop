@@ -4,6 +4,7 @@ import styles from "./CartAndUser.module.css";
 import {Badge} from "@/components/layout/Header/badge/Badge";
 import BurgerMenu from "@/components/layout/Header/burger/BurgerMenu";
 import RegisterModal from "@/features/auth/components/RegisterModal/RegisterModal";
+import {useAuth} from "@/features/auth/hooks/useAuth";
 
 interface CartAndUserProps{
     menuOpen:boolean;
@@ -12,9 +13,12 @@ interface CartAndUserProps{
 
 const CartAndUser: React.FC<CartAndUserProps> = ({ toggleMenu }) => {
     const [isOpen, setIsOpen] = React.useState(false);
+    const {isAuthenticated} = useAuth();
   return (
       <>
-          <RegisterModal isOpen={isOpen} setIsOpen={setIsOpen}/>
+          {!isAuthenticated && (
+              <RegisterModal isOpen={isOpen} setIsOpen={setIsOpen}/>
+          )}
       <div className={styles.cardAndUserContainer}>
           <div className={styles.cart}>
               <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">

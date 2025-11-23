@@ -69,7 +69,45 @@ export const resetPassword = async (resetToken: string, newPassword: string) => 
 export const login = async (email: string, password: string) => {
     const res = await fetch(API.routes.auth.login, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({email, password})
-    })
-}
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+    });
+
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || "Login failed");
+    }
+
+    return res.json();
+};
+
+export const logout = async () => {
+    await fetch(API.routes.auth.logout, {
+        method: "POST",
+        credentials: "include",
+    });
+};
+
+export const refresh = async () => {
+    await fetch(API.routes.auth.refresh, {
+        method: "POST",
+        credentials: "include",
+    });
+};
+
+export const getMe = async () => {
+    const res = await fetch(API.routes.auth.me, {
+        method: "GET",
+        credentials: "include",
+    });
+
+    if (res.status === 401) return null;
+
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || "Failed to load user");
+    }
+
+    return res.json();
+};
