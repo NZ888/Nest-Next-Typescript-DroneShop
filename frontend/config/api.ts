@@ -11,7 +11,12 @@ export const API = {
             refresh: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/refresh`,
             logout:`${env.NEXT_PUBLIC_BACKEND_URL}/auth/logout`,
             me: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/me`,
+
+
             register: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/register`,
+            sendEmailConfirmCode: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/send-email-confirm-code`,
+            verifyEmailConfirmCode: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/verify-email-confirm-code`,
+
             sendResetCode: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/send-reset-code`,
             verifyResetCode: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/verify-reset-code`,
             resetPassword: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/reset-password`,

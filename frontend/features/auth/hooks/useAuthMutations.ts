@@ -1,5 +1,13 @@
 import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import { sendResetCode, verifyResetCode, resetPassword, login, getMe, logout } from "../services/auth.service"
+import {
+    sendResetCode,
+    verifyResetCode,
+    resetPassword,
+    login,
+    getMe,
+    logout,
+    sendEmailConfirmCode, verifyEmailConfirmCode, register
+} from "../services/auth.service"
 
 export const useSendResetCode = () => {
     return useMutation({
@@ -7,13 +15,13 @@ export const useSendResetCode = () => {
     });
 };
 
-
 export const useVerifyResetCode = () => {
     return useMutation({
         mutationFn: (data: { email: string; code: string }) =>
             verifyResetCode(data.email, data.code),
     });
 };
+
 export const useResetPassword = () => {
     return useMutation({
         mutationFn: (data: { resetToken: string; newPassword: string }) =>
@@ -48,5 +56,25 @@ export const useMe = () => {
     return useQuery({
         queryKey: ["me"],
         queryFn: getMe,
+    });
+};
+
+export const useSendEmailConfirmCode = () => {
+    return useMutation({
+        mutationFn: (data: { email: string }) => sendEmailConfirmCode(data.email),
+    });
+};
+
+export const useVerifyEmailConfirmCode = () => {
+    return useMutation({
+        mutationFn: (data: { email: string; code: string }) =>
+            verifyEmailConfirmCode(data.email, data.code),
+    });
+};
+
+export const useRegister = () => {
+    return useMutation({
+        mutationFn: (data: { name: string; email: string; password: string; confirmToken: string }) =>
+            register(data.email, data.password, data.name, data.confirmToken),
     });
 };

@@ -3,8 +3,8 @@ import React from 'react';
 import styles from "./CartAndUser.module.css";
 import {Badge} from "@/components/layout/Header/badge/Badge";
 import BurgerMenu from "@/components/layout/Header/burger/BurgerMenu";
-import RegisterModal from "@/features/auth/components/RegisterModal/RegisterModal";
 import {useAuth} from "@/features/auth/hooks/useAuth";
+import AuthModal from "@/features/auth/components/AuthModal/AuthModal";
 
 interface CartAndUserProps{
     menuOpen:boolean;
@@ -17,7 +17,7 @@ const CartAndUser: React.FC<CartAndUserProps> = ({ toggleMenu }) => {
   return (
       <>
           {!isAuthenticated && (
-              <RegisterModal isOpen={isOpen} setIsOpen={setIsOpen}/>
+              <AuthModal isOpen={isOpen} setIsOpen={setIsOpen}/>
           )}
       <div className={styles.cardAndUserContainer}>
           <div className={styles.cart}>

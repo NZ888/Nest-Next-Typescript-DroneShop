@@ -17,8 +17,18 @@ import { JwtAuthGuard } from "@/auth/jwt/jwt-auth.guard";
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Post("send-email-confirm-code")
+  sendEmailConfirm(@Body() body: { email: string }) {
+    return this.authService.sendEmailConfirmCode(body.email);
+  }
+
+  @Post("verify-email-confirm-code")
+  verifyEmailConfirm(@Body() body: { email: string; code: string }) {
+    return this.authService.verifyEmailConfirmCode(body.email, body.code);
+  }
+
   @Post("register")
-  register(@Body() dto: RegisterDto) {
+  register(@Body() dto: RegisterDto & { confirmToken: string }) {
     return this.authService.register(dto);
   }
 

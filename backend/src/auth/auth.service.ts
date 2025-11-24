@@ -24,15 +24,23 @@ export class AuthService {
   private readonly salt = +process.env.BCRYPT_SALT;
 
 
-  async register(dto: IRegister) {
-    const exists = await this.prisma.user.findUnique({
+  async register(dto: IRegister & { confirmToken: string }) {
+    const record = await this.prisma.confirmEmailCode.findUnique({
       where: { email: dto.email }
     });
 
-    if (exists) throw new ConflictException("User already exists");
+    if (!record || record.confirmToken !== dto.confirmToken)
+      throw new BadRequestException("Пошта не підтверджена");
+
+    if (!record.confirmTokenExpiresAt || record.confirmTokenExpiresAt < new Date())
+      throw new BadRequestException("Токен підтвердження прострочений");
+
+
+    const exists = await this.prisma.user.findUnique({ where: { email: dto.email } });
+    if (exists)
+      throw new ConflictException("Користувач вже існує");
 
     const passwordHash = await bcrypt.hash(dto.password, this.salt);
-
     const user = await this.prisma.user.create({
       data: {
         email: dto.email,
@@ -43,7 +51,14 @@ export class AuthService {
       select: { uuid: true, name: true }
     });
 
-    return { message: "User successfully registered", user };
+    await this.prisma.confirmEmailCode.delete({
+      where: { email: dto.email }
+    });
+
+    return {
+      message: "User successfully registered",
+      user
+    };
   }
 
 
@@ -184,4 +199,57 @@ export class AuthService {
 
     return { message: "Пароль змінено" };
   }
+
+  async sendEmailConfirmCode(email: string) {
+    const existingUser = await this.prisma.user.findUnique({ where: { email } });
+    if (existingUser)
+      throw new BadRequestException("Користувач вже існує");
+
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+    await this.prisma.confirmEmailCode.upsert({
+      where: { email },
+      create: { email, code, attempts: 0 },
+      update: { code, attempts: 0 }
+    });
+
+    await this.mail.sendEmailConfirm(email, code);
+    return { message: "Код надіслано" };
+  }
+
+
+  async verifyEmailConfirmCode(email: string, code: string) {
+    const record = await this.prisma.confirmEmailCode.findUnique({ where: { email } });
+
+    if (!record)
+      throw new BadRequestException("Спочатку запросіть код");
+
+    if (record.attempts >= 5)
+      throw new BadRequestException("Забагато невдалих спроб");
+
+    if (record.code !== code) {
+      await this.prisma.confirmEmailCode.update({
+        where: { email },
+        data: { attempts: record.attempts + 1 }
+      });
+      throw new BadRequestException("Невірний код");
+    }
+
+    const confirmToken = randomUUID();
+    const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
+
+    await this.prisma.confirmEmailCode.update({
+      where: { email },
+      data: {
+        confirmToken,
+        confirmTokenExpiresAt: expiresAt,
+        attempts: 0
+      }
+    });
+
+    return { confirmToken };
+  }
+
 }
+
+

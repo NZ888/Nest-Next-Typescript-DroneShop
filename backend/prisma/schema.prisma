@@ -65,3 +65,12 @@ model ResetCode {
   resetTokenExpiresAt DateTime?
   updatedAt           DateTime  @updatedAt
 }
+
+model ConfirmEmailCode {
+  email                 String    @id
+  code                  String
+  attempts              Int       @default(0)
+  confirmToken          String?   @unique
+  confirmTokenExpiresAt DateTime?
+  updatedAt             DateTime  @updatedAt
+}

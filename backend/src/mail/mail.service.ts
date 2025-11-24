@@ -21,4 +21,14 @@ export class MailService {
         })
         this.logger.log(`Reset code ${code} sent to ${email}`);
     }
+    async sendEmailConfirm(email: string, code: string) {
+        await this.transporter.sendMail({
+            from: '"DroneShop" <no-reply@droneshop.local>',
+            to: email,
+            subject: "Код для підтверження email адреси",
+            text: `Ваш код для підтверження email: ${code}`,
+            html: `<p>Ваш код для підтверження email:</p><h1>${code}</h1>`,
+        })
+        this.logger.log(`email code ${code} sent to ${email}`);
+    }
 }

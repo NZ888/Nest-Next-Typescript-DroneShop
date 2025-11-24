@@ -111,3 +111,61 @@ export const getMe = async () => {
 
     return res.json();
 };
+
+export const sendEmailConfirmCode = async (email:string)=> {
+    const res = await fetch(API.routes.auth.sendEmailConfirmCode, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({email})
+    })
+    if (!res.ok) {
+        let errText = "Unknown server error";
+
+        try {
+            const json = await res.json();
+            if (json?.message) errText = json.message;
+        } catch {
+            const text = await res.text();
+            if (text) errText = text;
+        }
+
+        throw new Error(errText);
+    }
+
+    return res.json()
+}
+
+export const verifyEmailConfirmCode = async (email: string, code: string) => {
+    const res = await fetch(API.routes.auth.verifyEmailConfirmCode, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({email, code})
+    })
+    if (!res.ok) {
+        let errText = "Unknown server error";
+
+        try {
+            const json = await res.json();
+            if (json?.message) errText = json.message;
+        } catch {
+            const text = await res.text();
+            if (text) errText = text;
+        }
+
+        throw new Error(errText);
+    }
+    return res.json()
+}
+
+export const register = async (email: string, password: string, name:string, confirmToken: string) => {
+    const res = await fetch(API.routes.auth.register, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({email, password, name, confirmToken})
+    })
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || "Login failed");
+    }
+    return res.json();
+}
