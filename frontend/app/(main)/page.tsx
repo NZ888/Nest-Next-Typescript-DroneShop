@@ -1,15 +1,10 @@
-"use client";
-import React from 'react';
-import Hero from "@/components/home/Hero/Hero";
 
-type MainPageProps = object
+import MainPage from "@/components/home/MainPage";
 
-const MainPage: React.FC<MainPageProps> = ({  }) => {
-  return (
-    <main>
-        <Hero/>
-    </main>
-  );
-};
-
-export default MainPage;
+export default async function Main() {
+    return(
+        <main>
+            <MainPage/>
+        </main>
+    )
+}

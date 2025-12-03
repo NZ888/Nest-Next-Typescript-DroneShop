@@ -32,7 +32,6 @@ body {
     height: 100vh;
     background-color: var(--bg);
     overflow-x: hidden;
-    overflow-y: hidden;
 }
 :root{
     --bg: rgb(194, 203, 213);

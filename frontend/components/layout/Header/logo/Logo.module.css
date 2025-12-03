@@ -4,8 +4,11 @@
     top: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none;
-}
 
+}
+.logoContainer a {
+    pointer-events: auto;
+}
 
 @media (max-width: 630px) {
     .logoContainer {

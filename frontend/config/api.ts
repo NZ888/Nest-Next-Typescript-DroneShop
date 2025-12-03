@@ -4,7 +4,11 @@ export const API = {
     baseUrl: env.NEXT_PUBLIC_BACKEND_URL,
 
     routes: {
-        products: `${env.NEXT_PUBLIC_BACKEND_URL}/products`,
+        products: {
+            allProducts: `${env.NEXT_PUBLIC_BACKEND_URL}/products`,
+            getSomeNewProducts: (quantity: number) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/new?quantity=${quantity}`,
+            getProduct: (slug: string) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/${slug}` ,
+        },
 
         auth: {
             login: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,

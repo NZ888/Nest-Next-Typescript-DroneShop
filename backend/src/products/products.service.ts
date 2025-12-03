@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateProductDto } from '@/products/dto/create-product.dto';
 import { PrismaService } from '@/prisma/prisma.service';
 import { CloudinaryService } from '@/cloudinary/cloudinary.service';
@@ -46,6 +46,28 @@ export class ProductsService {
     return this.prisma.product.findUnique({
       where: {slug: slug}
     })
+  }
+  async getSomeNewProducts(quantity: number) {
+    const products = await this.prisma.product.findMany({
+      select: {
+        price: true,
+        name: true,
+        slug: true,
+        mainImage: true,
+        shortDesc: true,
+      },
+      take: quantity,
+      orderBy: { id: "desc" },
+    });
+
+    if (products.length !== quantity) {
+      throw new HttpException(
+        `Expected ${quantity} products but found ${products.length}`,
+        HttpStatus.NOT_FOUND
+      );
+    }
+
+    return products;
   }
   async updateProduct(id: number, data: any) {
     return this.prisma.product.update({

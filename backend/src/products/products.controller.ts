@@ -6,7 +6,11 @@ import {
   UploadedFiles,
   UseGuards,
   Get,
-  Param, Patch, Delete,
+  Param,
+  Patch,
+  Delete,
+  Query,
+  HttpException,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from '@/auth/jwt/jwt-auth.guard';
@@ -106,10 +110,17 @@ export class ProductsController {
   async getAllProducts(){
     return this.productsService.getAll();
   }
-  @Get(":slug")
-  async getProductBySlug(@Param('slug') slug: string) {
-    return this.productsService.getProductBySlug(slug);
+  @Get("new")
+  async getSomeNewProducts(@Query('quantity') quantity: string) {
+      const num = Number(quantity);
+
+      if (Number.isNaN(num)) {
+          throw new HttpException("quantity must be a valid number", 400);
+      }
+
+      return this.productsService.getSomeNewProducts(num);
   }
+
   @Patch(':id')
   @UseGuards(JwtAuthGuard)
   @Roles(Role.ADMIN)
@@ -180,5 +191,12 @@ export class ProductsController {
   async deleteProduct(@Param('id') id: string) {
     return this.productsService.deleteProduct(+id);
   }
+
+    @Get(":slug")
+    async getProductBySlug(@Param('slug') slug: string) {
+        return this.productsService.getProductBySlug(slug);
+    }
+
+
 
 }

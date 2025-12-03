@@ -9,7 +9,7 @@ interface ModalProps {
   setIsOpen: (isOpen: boolean) => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ children, isOpen, setIsOpen }) => {
+const Modal: React.FC<ModalProps> = ({ children, isOpen, setIsOpen}) => {
   return (
       <Portal>
         <AnimatePresence mode="wait">

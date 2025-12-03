@@ -1,0 +1,26 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--white-100);
+    width: 100%;
+    height: auto;
+}
+.container h2{
+    font-weight: 900;
+    font-size: 44px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    text-align: center;
+    color: var(--secondary-100);
+}
+.itemsContainer{
+    margin-top: 64px;
+    display: flex;
+    flex-direction: row;
+    gap: 64px;
+    align-items: center;
+    justify-content: center;
+}
