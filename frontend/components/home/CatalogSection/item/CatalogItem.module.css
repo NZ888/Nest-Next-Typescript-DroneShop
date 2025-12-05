@@ -1,0 +1,36 @@
+.item{
+    display: flex;
+    padding: 14px;
+    width: 222px;
+    height: 263px;
+    flex-direction: column;
+    gap: 20px;
+}
+.textInfo {
+
+}
+.textInfo a{
+    text-decoration: none;
+}
+.textInfo h3{
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--blue-100);
+}
+.price{
+    display: flex;
+    align-items: center;
+}
+/*.priceDefault{}*/
+/*.priceSale{}*/
+.priceDefault {
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: line-through;
+    color: var(--blue-100);
+}
+.priceSale {
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--alert);
+}

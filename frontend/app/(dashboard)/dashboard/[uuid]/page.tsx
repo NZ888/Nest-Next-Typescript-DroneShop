@@ -1,4 +1,5 @@
 import React from "react";
+import DashBoard from "@/components/dashboard/DashBoard";
 
 interface Props {
     params: {
@@ -8,11 +9,10 @@ interface Props {
 
 export default async function DashboardUserPage({ params }: { params: Promise<{ uuid: string }> }) {
     const { uuid } = await params;
-
     return (
-        <div>
-            <h1>User dashboard: {uuid}</h1>
-        </div>
+        <>
+            <DashBoard/>
+        </>
     );
 }
 

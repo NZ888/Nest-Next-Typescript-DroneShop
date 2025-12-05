@@ -55,6 +55,7 @@ export class ProductsService {
         slug: true,
         mainImage: true,
         shortDesc: true,
+          oldPrice: true,
       },
       take: quantity,
       orderBy: { id: "desc" },
