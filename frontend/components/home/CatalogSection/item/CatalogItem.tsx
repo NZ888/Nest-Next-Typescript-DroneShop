@@ -14,7 +14,7 @@ interface CatalogItemProps {
 const CatalogItem: React.FC<CatalogItemProps> = ({ title, price, oldPrice, slug, imageUrl }) => {
   return (
     <div className={styles.item}>
-        <div style={{ width: "100%", height: "50%", display:"flex", justifyContent: "center", cursor:"default" }}>
+        <div className={styles.imageWrapper}>
             <Image src={imageUrl} alt={title} width={161} height={100} />
         </div>
         <div className={styles.textInfo}>
@@ -29,9 +29,8 @@ const CatalogItem: React.FC<CatalogItemProps> = ({ title, price, oldPrice, slug,
                     <p className={styles.priceSale}>{price}</p>
                 </div>
             ) : (
-                <p style={{fontWeight:500, fontSize:"14px"}}>{price}</p>
+                <div className={styles.priceWithoutSale}><p>{price}</p></div>
             )}
-
         </div>
     </div>
   );

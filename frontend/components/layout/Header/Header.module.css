@@ -62,6 +62,11 @@
         font-size: 11px;
     }
 }
+@media (max-width: 410px) {
+    .mobileMenuLinks{
+        font-size: 9px;
+    }
+}
 
 @keyframes fadeIn {
     from {

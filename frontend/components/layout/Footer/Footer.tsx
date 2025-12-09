@@ -12,8 +12,21 @@ const Footer: React.FC<FooterProps> = ({  }) => {
   return (
       <>
           <footer className={styles.waveSection}>
-              <div style={{position:"relative", top:"-400px", zIndex:10}}>
-                 <h1>hello</h1>
+              <div style={{position:"relative", top:"-118px", zIndex:10}}>
+                 <div className={styles.info}>
+                    <div className={styles.infoItem}>
+                        <h3>1K+</h3>
+                        <p>Успішних відправок</p>
+                    </div>
+                     <div className={styles.infoItem}>
+                         <h3>1.5K+</h3>
+                         <p>Задоволених клієнтів</p>
+                     </div>
+                     <div className={styles.infoItem}>
+                         <h3>24/7</h3>
+                         <p>Підтримка клієнтів</p>
+                     </div>
+                 </div>
               </div>
               <div className={styles.container}>
                   <div className={styles.content}>

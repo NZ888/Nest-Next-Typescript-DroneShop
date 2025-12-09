@@ -44,7 +44,11 @@
     bottom: 140px;
     left: 450px;
 }
-
+.promo p{
+    font-weight: 400;
+    font-size: 16px;
+    color: var(--blue-100);
+}
 .bgCurve {
     position: absolute;
     bottom: 0;
@@ -54,4 +58,54 @@
     background: var(--white-100);
     clip-path: ellipse(70% 45% at 50% 100%);
     z-index: -1;
+}
+
+@media (max-width: 1195px) {
+    .promo p{
+        font-size: 13px;
+    }
+    .promo{
+        left: 400px;
+    }
+}
+@media (max-width: 1019px) {
+    .promo{
+        left: 350px;
+    }
+}
+@media (max-width: 920px) {
+    .promo{
+        left: 0px;
+        bottom: 0px;
+        right: 0px;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 721px) {
+    .imageWrapper img {
+        width: 520px;
+        height: 520px;
+        position: relative;
+        bottom: 100px;
+    }
+}
+@media (max-width: 521px) {
+    .imageWrapper img {
+        width: 420px;
+        height: 420px;
+        position: relative;
+        bottom: 50px;
+    }
+}
+@media (max-width: 421px) {
+    .imageWrapper img {
+        width: 320px;
+        height: 320px;
+        position: relative;
+        bottom: 0;
+    }
 }

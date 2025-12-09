@@ -24,3 +24,10 @@
     align-items: center;
     justify-content: center;
 }
+
+@media (max-width: 1085px) {
+    .itemsContainer{
+        flex-direction: column;
+        gap: 200px;
+    }
+}

@@ -44,3 +44,22 @@
     text-transform: uppercase;
     color: var(--white-100);
 }
+@media (max-width: 1085px) {
+    .items {
+        gap: 5px;
+    }
+}
+
+@media (max-width: 912px) {
+    .items {
+        gap: 5px;
+    }
+}
+
+
+@media (max-width: 724px) {
+    .items {
+        gap: 1px;
+        flex-direction: column;
+    }
+}
