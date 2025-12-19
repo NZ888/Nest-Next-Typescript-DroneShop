@@ -20,7 +20,7 @@ export const AboutSection: React.FC<AboutSectionProps> = ({  }) => {
             </p>
             <div style={{width:'100%', display:'flex', justifyContent:'center'}}>
                 <GhostButton>
-                    <Link style={{textDecoration: "none", color:"black"}} href={PAGES.STORE()}>ЧИТАТИ БІЛЬШЕ</Link>
+                    <Link style={{textDecoration: "none", color:"black"}} href={PAGES.ABOUT()}>ЧИТАТИ БІЛЬШЕ</Link>
                 </GhostButton>
             </div>
         </div>

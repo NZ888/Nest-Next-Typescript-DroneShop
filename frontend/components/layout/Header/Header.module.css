@@ -6,7 +6,7 @@
     height: auto;
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    padding-top: 10px;
 }
 .headerContainer {
     position: relative;
