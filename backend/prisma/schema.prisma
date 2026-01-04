@@ -74,3 +74,12 @@ model ConfirmEmailCode {
   confirmTokenExpiresAt DateTime?
   updatedAt             DateTime  @updatedAt
 }
+
+model Feedback {
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+}

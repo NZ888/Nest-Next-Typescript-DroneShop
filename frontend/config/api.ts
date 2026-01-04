@@ -25,5 +25,10 @@ export const API = {
             verifyResetCode: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/verify-reset-code`,
             resetPassword: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/reset-password`,
         },
+
+        feedback:{
+            sendFeedback:`${env.NEXT_PUBLIC_BACKEND_URL}/feedback/send`,
+            getFeedbacks:`${env.NEXT_PUBLIC_BACKEND_URL}/feedback/get`,
+        }
     },
 };
