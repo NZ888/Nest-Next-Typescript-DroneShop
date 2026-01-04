@@ -18,3 +18,20 @@ export function svgToJsx(svg: string): string {
             return `style={{ ${objectLiteral} }}`;
         });
 }
+export async function handleResponse<T>(res: Response): Promise<T> {
+    if (!res.ok) {
+        let errText = "Unknown server error";
+
+        try {
+            const json = await res.json();
+            if (json?.message) errText = json.message;
+        } catch {
+            const text = await res.text();
+            if (text) errText = text;
+        }
+
+        throw new Error(errText);
+    }
+
+    return await res.json() as Promise<T>;
+}

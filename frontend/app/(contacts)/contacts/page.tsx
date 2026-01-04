@@ -1,13 +1,9 @@
-import React from 'react';
+import ContactsPage from "@/components/contacts/ContactsPage";
 
-type ContactsProps = object
-
-const Contacts: React.FC<ContactsProps> = ({  }) => {
-  return (
-    <div className="">
-      CONTACTS
-    </div>
-  );
-};
-
-export default Contacts;
+export default async function Contacts(){
+    return (
+        <div>
+            <ContactsPage/>
+        </div>
+    )
+}
