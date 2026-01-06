@@ -1,6 +1,7 @@
 import Footer from "@/components/layout/Footer/Footer";
 import Header from "@/components/layout/Header/Header";
 import styles from "./ContactsPage.module.css"
+import FeedbackForm from "@/features/feedback/components/FeedbackForm/FeedbackForm";
 
 
 export default async function ContactsPage(){
@@ -68,6 +69,7 @@ export default async function ContactsPage(){
                         </section>
                     <section className={styles.feedbackContainer}>
                         <h2 className={styles.contactsTitle}>Зв’язатися з нами</h2>
+                        <FeedbackForm/>
                     </section>
                 </div>
             </div>

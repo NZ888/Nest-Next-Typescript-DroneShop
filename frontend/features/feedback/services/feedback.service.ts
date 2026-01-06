@@ -2,14 +2,17 @@ import {API} from "@/config/api"
 import {handleResponse} from "@/lib/helpers";
 import {IFeedback} from "@/features/feedback/types/feedback";
 
-export const sendFeedback = async (feedback: IFeedback) =>{
+type FeedbackFormData = Omit<IFeedback, "createdAt">;
+
+export const sendFeedback = async (feedback: FeedbackFormData) => {
     const res = await fetch(API.routes.feedback.sendFeedback, {
-        method: 'POST',
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({feedback})
-    })
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(feedback),
+    });
+
     return handleResponse(res);
-}
+};
 
 export const getFeedbacks = async (page = 1, limit = 10) => {
     const params = new URLSearchParams({

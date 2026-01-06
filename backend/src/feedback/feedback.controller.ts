@@ -11,11 +11,11 @@ import { GetFeedbackDto } from '@/feedback/dto/get.feedback.dto';
 export class FeedbackController {
   constructor(private readonly feedbackService: FeedbackService) {}
 
-  @Post("send")
-  @Throttle({ default: { limit: 3, ttl: 24 * 60 * 60 * 1000 } })
-  pushFeedback(@Body() feedbackDto: FeedbackDto){
-    this.feedbackService.pushFeedback(feedbackDto)
-  }
+    @Post("send")
+    @Throttle({ default: { limit: 3, ttl: 24 * 60 * 60 * 1000 } })
+    async pushFeedback(@Body() feedbackDto: FeedbackDto) {
+      return await this.feedbackService.pushFeedback(feedbackDto);
+    }
 
   @Get("get")
   @UseGuards(JwtAuthGuard)
