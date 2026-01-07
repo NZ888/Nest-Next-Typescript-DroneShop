@@ -31,4 +31,49 @@ export class MailService {
         })
         this.logger.log(`email code ${code} sent to ${email}`);
     }
+    async sendFeedbackToAdminsEmail(email: string, message: string, phone: string, name: string) {
+      await this.transporter.sendMail({
+        from: '"DroneShop" <no-reply@droneshop.local>',
+        to: '"DroneShop" <no-reply@droneshop.local>',
+        subject: `Юзер ${name} надіслав фідбек повідомлення`,
+        text: `Юзер ${name} надіслав фідбек повідомлення`,
+        html: `
+          <div style="font-family: Arial, sans-serif; background-color:#f9fafb; padding:20px; border-radius:8px;">
+            <h2 style="
+              margin:0 0 12px 0;
+              font-size:20px;
+              color:#111827;
+            ">
+              Юзер ${name} надіслав фідбек повідомлення
+            </h2>
+          
+            <p style="
+              margin:0 0 16px 0;
+              font-size:15px;
+              color:#374151;
+              line-height:1.5;
+            ">
+              ${message}
+            </p>
+          
+            <p style="
+              margin:0 0 6px 0;
+              font-size:14px;
+              color:#1f2937;
+            ">
+              <strong>Електронна адреса:</strong> ${email}
+            </p>
+          
+            <p style="
+              margin:0;
+              font-size:14px;
+              color:#1f2937;
+            ">
+              <strong>Телефон:</strong> ${phone}
+            </p>
+
+        </div>`,
+
+      })
+    }
 }
