@@ -35,6 +35,7 @@ import { VerifyScreen } from "./screens/VerifyScreen";
 import { NewPasswordScreen } from "./screens/NewPasswordScreen";
 import { VerifyEmailScreen } from "./screens/VerifyEmailScreen";
 import {EmailConfirmScreen} from "@/features/auth/components/AuthModal/screens/EmailConfirmScreen";
+import {useNotify} from "@/providers/NotificationProvider";
 
 export default function AuthModal({ isOpen, setIsOpen }: RegisterModalProps) {
     const [screen, setScreen] = React.useState<AuthScreen>("login");
@@ -75,7 +76,7 @@ export default function AuthModal({ isOpen, setIsOpen }: RegisterModalProps) {
         confirmToken:""
     });
 
-
+    const notify = useNotify();
 
     const closeModal = () => setIsOpen(false);
 
@@ -87,6 +88,7 @@ export default function AuthModal({ isOpen, setIsOpen }: RegisterModalProps) {
             },
             onSuccess: () => {
                 closeModal();
+                notify("Ви успішно увійшли, приємних закупівель!", "success", 5000)
             },
         });
     };
@@ -152,6 +154,7 @@ export default function AuthModal({ isOpen, setIsOpen }: RegisterModalProps) {
                                 confirmEmailForm.reset();
                                 verifyEmailConfirmCode.reset();
                                 registerForm.reset();
+                                notify("Ви успішно створили акаунт!", "success", 5000)
                                 goToLogin()
                             },
                             onError: (err) => {

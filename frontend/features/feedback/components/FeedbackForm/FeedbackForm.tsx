@@ -7,6 +7,7 @@ import {IFeedback} from "@/features/feedback/types/feedback";
 import {useSendFeedbackMutation} from "@/features/feedback/hooks/useFeedbackMutation";
 import { useWatch } from "react-hook-form";
 import SolidButton from "@/components/ui/SolidBtn/SolidButton";
+import {useNotify} from "@/providers/NotificationProvider";
 
 type FeedbackFormProps = object
 type FeedbackFormData = Omit<IFeedback, "createdAt">;
@@ -20,14 +21,15 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({  }) => {
         control,
         name: "message",
     });
-
+    const notify = useNotify();
     const handleFeedback = (data: FeedbackFormData) =>{
         feedbackMutation.mutate(data, {
             onError: (err: Error)=> {
-
+                notify("Щось пішло не так! Спробуйте пізніше або зв'яжітся з нами через телефон", "error", 10000)
             },
             onSuccess: () => {
                 reset()
+                notify("Фідбек був відправленний", "success", 5000)
             },
         })
     }
