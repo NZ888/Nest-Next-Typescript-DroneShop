@@ -10,7 +10,7 @@ import {
   Patch,
   Delete,
   Query,
-  HttpException,
+  HttpException, Put,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from '@/auth/jwt/jwt-auth.guard';
@@ -21,6 +21,8 @@ import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ApiBody, ApiOperation } from '@nestjs/swagger';
 import { UpdateProductDto } from '@/products/dto/update-product.dto';
+import { SetProductCategoriesDto } from '@/products/dto/set-product-category.dto';
+import { CreateCategoryDto } from '@/products/dto/create-category.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -192,11 +194,35 @@ export class ProductsController {
     return this.productsService.deleteProduct(+id);
   }
 
-    @Get(":slug")
-    async getProductBySlug(@Param('slug') slug: string) {
-        return this.productsService.getProductBySlug(slug);
-    }
+  @Get(":slug")
+  async getProductBySlug(@Param('slug') slug: string) {
+    return this.productsService.getProductBySlug(slug);
+  }
 
+  @Put(":slug/categories")
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN)
+  async setCategories(@Param('slug') slug: string, @Body() dto: SetProductCategoriesDto) {
+    return this.productsService.setCategories(slug, dto);
+  }
 
+  @Patch(":slug/categories")
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN)
+  async addCategoriesToExists(@Param('slug') slug: string, dto: SetProductCategoriesDto) {
+    return this.productsService.addCategories(slug, dto);
+  }
 
+  @Post("categories")
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN)
+  async createCategory(@Body() dto: CreateCategoryDto) {
+    return this.productsService.createCategory(dto);
+  }
+  @Delete("categories/:slug")
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN)
+  async deleteCategory(@Param('slug') slug: string) {
+    return this.productsService.deleteCategory(slug);
+  }
 }

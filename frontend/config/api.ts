@@ -8,6 +8,15 @@ export const API = {
             allProducts: `${env.NEXT_PUBLIC_BACKEND_URL}/products`,
             getSomeNewProducts: (quantity: number) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/new?quantity=${quantity}`,
             getProduct: (slug: string) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/${slug}` ,
+
+            category:{
+                CRUD:{
+                    createCategory: `${env.NEXT_PUBLIC_BACKEND_URL}/products/categories`,
+                    deleteCategory: (slug: string) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/categories/${slug}` ,
+                },
+                setCategories: (slug: string) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/${slug}/categories`,
+                addCategoriesToExists: (slug: string) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/${slug}/categories`,
+            }
         },
 
         auth: {
