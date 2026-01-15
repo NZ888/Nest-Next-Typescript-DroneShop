@@ -1,10 +1,4 @@
-import {
-  BadRequestException,
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException, } from '@nestjs/common';
 import { CreateProductDto } from '@/products/dto/create-product.dto';
 import { PrismaService } from '@/prisma/prisma.service';
 import { CloudinaryService } from '@/cloudinary/cloudinary.service';
@@ -196,5 +190,10 @@ export class ProductsService {
     ]);
 
     return { ok: true };
+  }
+  async getAllCategories() {
+    return this.prisma.category.findMany({
+      select: { name: true, slug: true },
+    });
   }
 }

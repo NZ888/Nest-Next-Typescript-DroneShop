@@ -225,4 +225,8 @@ export class ProductsController {
   async deleteCategory(@Param('slug') slug: string) {
     return this.productsService.deleteCategory(slug);
   }
+  @Get("categories")
+  async getAllCategories(){
+    return this.productsService.getAllCategories();
+  }
 }

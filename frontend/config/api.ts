@@ -13,6 +13,7 @@ export const API = {
                 CRUD:{
                     createCategory: `${env.NEXT_PUBLIC_BACKEND_URL}/products/categories`,
                     deleteCategory: (slug: string) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/categories/${slug}` ,
+                    getAll: `${env.NEXT_PUBLIC_BACKEND_URL}/products/categories`,
                 },
                 setCategories: (slug: string) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/${slug}/categories`,
                 addCategoriesToExists: (slug: string) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/${slug}/categories`,
