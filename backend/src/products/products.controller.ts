@@ -23,6 +23,7 @@ import { ApiBody, ApiOperation } from '@nestjs/swagger';
 import { UpdateProductDto } from '@/products/dto/update-product.dto';
 import { SetProductCategoriesDto } from '@/products/dto/set-product-category.dto';
 import { CreateCategoryDto } from '@/products/dto/create-category.dto';
+import {GetProductsDto} from "@/products/dto/get.products.dto";
 
 @Controller('products')
 export class ProductsController {
@@ -109,8 +110,10 @@ export class ProductsController {
     return body;
   }
   @Get()
-  async getAllProducts(){
-    return this.productsService.getAll();
+  async getAllProducts(@Query() query: GetProductsDto) {
+      const page:number = Number(query.page);
+      const limit:number = Number(query.limit);
+      return this.productsService.getAll(page, limit);
   }
   @Get("new")
   async getSomeNewProducts(@Query('quantity') quantity: string) {

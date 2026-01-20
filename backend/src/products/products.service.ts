@@ -33,16 +33,31 @@ export class ProductsService {
       include: { sections: true },
     });
   }
-  async getAll(){
-    return this.prisma.product.findMany({
-      select: {
-        name: true,
-        price: true,
-        oldPrice: true,
-        mainImage: true,
-        slug: true,
-      }
-    });
+  async getAll(page: number = 1, limit: number = 16){
+      const skip : number = (page - 1) * limit
+      const [products, total] = await Promise.all([
+          this.prisma.product.findMany({
+              skip: skip,
+              take: limit,
+              orderBy: {createdAt:"desc"}
+          }),
+          this.prisma.feedback.count()
+      ])
+      const totalPages: number = Math.ceil(total / limit);
+      return {
+        message: products.length
+          ? 'List of all products'
+          : 'No products found.',
+        status: products.length ? HttpStatus.OK : HttpStatus.NOT_FOUND,
+        pagination: {
+          page: `Page ${page}`,
+          limit: `Limit: ${limit}`,
+          totalPages: `Total ${totalPages}`,
+        },
+        data: {
+          products: products,
+        },
+      };
   }
   async getProductBySlug(slug: string){
     return this.prisma.product.findUnique({

@@ -1,5 +1,5 @@
 import {useQuery} from "@tanstack/react-query";
-import {getSomeNewProducts} from "../services/product.servise";
+import {getAllProducts, getSomeNewProducts} from "../services/product.service";
 
 export const useGetSomeNewProducts = (quantity: number) => {
     return useQuery({
@@ -7,3 +7,12 @@ export const useGetSomeNewProducts = (quantity: number) => {
         queryFn: ()=> getSomeNewProducts(quantity)
     })
 }
+export const useGetAllProducts = (page = 1, limit = 16) => {
+    return useQuery({
+        queryKey: ["all_products", page, limit],
+        queryFn: ({ queryKey }) => {
+            const [, page, limit] = queryKey as ["all_products", number, number];
+            return getAllProducts(page, limit);
+        },
+    });
+};
