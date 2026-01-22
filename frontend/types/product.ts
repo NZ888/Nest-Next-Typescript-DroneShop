@@ -6,4 +6,32 @@ export interface INewProduct {
     slug: string;
     shortDesc: string;
 }
+export interface ICategory {
 
+}
+export interface IProduct {
+    id: number;
+    name: string;
+    slug: string;
+    price: number;
+    oldPrice: number | "null" | null;
+    shortDesc: string;
+    mainImage: string;
+    gallery: string[];
+    videoUrl: string | "null" | null;
+    specs: Record<string, string | number>;
+    createdAt: string;
+    updatedAt: string;
+}
+export interface IFetchedProducts {
+    message: string;
+    status: number;
+    pagination : {
+        page: number;
+        limit: number;
+        total: number;
+    };
+    data: {
+        products:never
+    }
+}

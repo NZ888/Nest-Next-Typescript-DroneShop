@@ -5,7 +5,7 @@ export const API = {
 
     routes: {
         products: {
-            allProducts: `${env.NEXT_PUBLIC_BACKEND_URL}/products`,
+            allProducts: (page?: number, limit?: number) => `${env.NEXT_PUBLIC_BACKEND_URL}/products?page=${page}?limit=${limit}`,
             getSomeNewProducts: (quantity: number) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/new?quantity=${quantity}`,
             getProduct: (slug: string) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/${slug}` ,
 

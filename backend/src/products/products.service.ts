@@ -29,6 +29,14 @@ export class ProductsService {
             order: s.order,
           })),
         },
+        categories: dto.categories?.length
+          ? {
+            connectOrCreate: dto.categories.map((c) => ({
+              where: { slug: c.slug },
+              create: { name: c.name, slug: c.slug, image: c.image },
+            })),
+          }
+          : undefined,
       },
       include: { sections: true },
     });
@@ -50,9 +58,9 @@ export class ProductsService {
           : 'No products found.',
         status: products.length ? HttpStatus.OK : HttpStatus.NOT_FOUND,
         pagination: {
-          page: `Page ${page}`,
-          limit: `Limit: ${limit}`,
-          totalPages: `Total ${totalPages}`,
+          page: page,
+          limit: limit,
+          totalPages: totalPages,
         },
         data: {
           products: products,

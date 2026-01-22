@@ -9,6 +9,7 @@ import {
 import { Type } from 'class-transformer';
 import { CreateSectionDto } from './create-section.dto';
 import { ApiProperty } from '@nestjs/swagger';
+import { CreateCategoryDto } from '@/products/dto/create-category.dto';
 
 export class CreateProductDto {
   @ApiProperty()
@@ -48,4 +49,5 @@ export class CreateProductDto {
   @Type(() => CreateSectionDto)
   @IsOptional()
   sections?: CreateSectionDto[];
+  categories: CreateCategoryDto[];
 }

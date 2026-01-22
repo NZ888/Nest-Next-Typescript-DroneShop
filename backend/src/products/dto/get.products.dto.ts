@@ -1,13 +1,18 @@
-import {ApiProperty} from "@nestjs/swagger";
-import { IsNumberString, IsOptional } from 'class-validator';
+
+import { IsInt, IsNumberString, IsOptional, Max, Min } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class GetProductsDto {
-    @ApiProperty()
-    @IsNumberString()
-    @IsOptional()
-    page:number
-    @ApiProperty()
-    @IsNumberString()
-    @IsOptional()
-    limit:number
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  page?: number = 1;
+
+  @IsOptional()
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  @Max(100)
+  limit?: number = 16;
 }

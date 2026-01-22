@@ -10,7 +10,9 @@ import {
   Patch,
   Delete,
   Query,
-  HttpException, Put,
+  HttpException,
+  Put,
+  BadRequestException,
 } from '@nestjs/common';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from '@/auth/jwt/jwt-auth.guard';
@@ -219,9 +221,31 @@ export class ProductsController {
   @Post("categories")
   @UseGuards(JwtAuthGuard)
   @Roles(Role.ADMIN)
-  async createCategory(@Body() dto: CreateCategoryDto) {
-    return this.productsService.createCategory(dto);
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      {name: "image", maxCount: 1}
+    ])
+  )
+  async createCategory(@Body() dto: CreateCategoryDto, @UploadedFiles() files: {image: Express.Multer.File[]})
+  {
+    let imageUrl: string | undefined = undefined;
+    if (files.image?.[0]) {
+      const uploaded = await this.cloudinaryService.uploadImage(
+        files.image[0],
+      );
+      imageUrl = uploaded.secure_url;
+    }
+    if (!files?.image?.[0]) {
+      throw new BadRequestException('Image is required');
+    }
+    const updatedData = {
+      ...dto,
+      image: imageUrl,
+    }
+    return this.productsService.createCategory(updatedData);
   }
+
+
   @Delete("categories/:slug")
   @UseGuards(JwtAuthGuard)
   @Roles(Role.ADMIN)
