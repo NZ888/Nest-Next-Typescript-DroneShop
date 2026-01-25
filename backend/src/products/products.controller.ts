@@ -45,66 +45,53 @@ export class ProductsController {
     ]),
   )
   async createProduct(
-    @Body('data') data: string,
-    @UploadedFiles()
-    files: {
+    @Body() dto: CreateProductDto,
+    @UploadedFiles() files: {
       mainImage?: Express.Multer.File[];
       gallery?: Express.Multer.File[];
       sectionImages?: Express.Multer.File[];
     },
   ) {
 
-    const parsed: CreateProductDto = JSON.parse(data);
+    dto.price = Number(dto.price);
+    if (dto.oldPrice !== undefined) dto.oldPrice = Number(dto.oldPrice);
 
 
-    let mainImage: string | undefined = undefined;
+    let mainImage: string | undefined;
     if (files.mainImage?.[0]) {
-      const uploaded = await this.cloudinaryService.uploadImage(
-        files.mainImage[0],
-      );
+      const uploaded = await this.cloudinaryService.uploadImage(files.mainImage[0]);
       mainImage = uploaded.secure_url;
     }
 
 
     const gallery: string[] = [];
     if (files.gallery?.length) {
-      for (const file of files.gallery) {
-        const uploaded = await this.cloudinaryService.uploadImage(file);
-        gallery.push(uploaded.secure_url);
-      }
+      const uploads = await Promise.all(files.gallery.map(f => this.cloudinaryService.uploadImage(f)));
+      gallery.push(...uploads.map(u => u.secure_url));
     }
 
 
-    let sections = parsed.sections || [];
+    let sections = dto.sections ?? [];
     if (sections.length && files.sectionImages?.length) {
       sections = await Promise.all(
         sections.map(async (section, index) => {
-          const sectionFile = files.sectionImages?.[index];
-          if (sectionFile) {
-            const uploaded = await this.cloudinaryService.uploadImage(
-              sectionFile,
-            );
-            return {
-              ...section,
-              image: uploaded.secure_url,
-            };
-          }
-          return section;
+          const file = files.sectionImages?.[index];
+          if (!file) return section;
+          const uploaded = await this.cloudinaryService.uploadImage(file);
+          return { ...section, image: uploaded.secure_url };
         }),
       );
     }
+    console.log('SECTIONS AFTER PARSE:', dto.sections);
 
-
-    const finalDto: CreateProductDto = {
-      ...parsed,
-      mainImage,
+    return this.productsService.createProduct({
+      ...dto,
+      mainImage: mainImage ?? null,
       gallery,
       sections,
-    };
-
-
-    return this.productsService.createProduct(finalDto);
+    });
   }
+
   @Post('example')
   @ApiOperation({ summary: 'Product schema' })
   @ApiBody({ type: CreateProductDto })
@@ -219,8 +206,8 @@ export class ProductsController {
   }
 
   @Post("categories")
-  @UseGuards(JwtAuthGuard)
-  @Roles(Role.ADMIN)
+  // @UseGuards(JwtAuthGuard)
+  // @Roles(Role.ADMIN)
   @UseInterceptors(
     FileFieldsInterceptor([
       {name: "image", maxCount: 1}
@@ -234,15 +221,19 @@ export class ProductsController {
         files.image[0],
       );
       imageUrl = uploaded.secure_url;
+      if (!imageUrl) {
+          throw new BadRequestException('Cloudinary did not return image URL');
+      }
     }
     if (!files?.image?.[0]) {
       throw new BadRequestException('Image is required');
     }
-    const updatedData = {
+
+      const updatedData = {
       ...dto,
       image: imageUrl,
     }
-    return this.productsService.createCategory(updatedData);
+      return this.productsService.createCategory(updatedData);
   }
 
 
@@ -250,6 +241,7 @@ export class ProductsController {
   @UseGuards(JwtAuthGuard)
   @Roles(Role.ADMIN)
   async deleteCategory(@Param('slug') slug: string) {
+
     return this.productsService.deleteCategory(slug);
   }
   @Get("categories")

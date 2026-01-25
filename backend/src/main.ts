@@ -18,7 +18,8 @@ async function bootstrap() {
     exposedHeaders: ['Authorization'],
   });
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true, transformOptions: { enableImplicitConversion: true },}));
+
   const PORT = process.env.PORT || 3000;
 
   const config = new DocumentBuilder()

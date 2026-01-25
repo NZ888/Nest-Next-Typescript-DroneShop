@@ -9,7 +9,11 @@ import { CreateCategoryDto } from '@/products/dto/create-category.dto';
 export class ProductsService {
   constructor(private prisma: PrismaService, private cloudinaryService: CloudinaryService) {}
   async createProduct(dto: CreateProductDto) {
-    return this.prisma.product.create({
+      const sections = (dto.sections ?? [])
+          .filter((s: any) => s && (s.title || s.text || s.image || s.video) && s.order !== undefined && s.order !== null)
+          .map((s: any) => ({ ...s, order: Number(s.order) }));
+
+      return this.prisma.product.create({
       data: {
         name: dto.name,
         slug: dto.slug,
@@ -19,16 +23,7 @@ export class ProductsService {
         mainImage: dto.mainImage,
         gallery: dto.gallery,
         videoUrl: dto.videoUrl,
-        specs: dto.specs,
-        sections: {
-          create: dto.sections?.map((s) => ({
-            title: s.title,
-            text: s.text,
-            image: s.image,
-            video: s.video,
-            order: s.order,
-          })),
-        },
+        specs: dto.specs, sections: sections.length ? { create: sections } : undefined,
         categories: dto.categories?.length
           ? {
             connectOrCreate: dto.categories.map((c) => ({
@@ -176,10 +171,11 @@ export class ProductsService {
     })
     if (exist) throw new BadRequestException("Category already exist");
     return this.prisma.category.create({
-      data:{
-        name: dto.name,
-        slug: dto.slug,
-      },
+        data:{
+          name: dto.name,
+          slug: dto.slug,
+          image: dto.image
+        },
       include: {products: true}
     })
   }

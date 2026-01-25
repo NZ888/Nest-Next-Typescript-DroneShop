@@ -21,6 +21,6 @@ export class CreateCategoryDto {
     slug!: string;
 
     @ApiProperty()
-    @IsUrl()
+    // @IsUrl()
     image?: string;
 }

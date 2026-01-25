@@ -1,5 +1,6 @@
 import { IsString, IsOptional, IsInt, IsUrl } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 
 export class CreateSectionDto {
   @IsString()
@@ -18,6 +19,7 @@ export class CreateSectionDto {
   @IsOptional()
   video?: string;
   @ApiProperty()
+  @Type(() => Number)
   @IsInt()
-  order: number; 
+  order: number;
 }
