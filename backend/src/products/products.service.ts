@@ -44,7 +44,7 @@ export class ProductsService {
               take: limit,
               orderBy: {createdAt:"desc"}
           }),
-          this.prisma.feedback.count()
+          this.prisma.product.count()
       ])
       const totalPages: number = Math.ceil(total / limit);
       return {
@@ -211,8 +211,9 @@ export class ProductsService {
     return { ok: true };
   }
   async getAllCategories() {
-    return this.prisma.category.findMany({
-      select: { name: true, slug: true },
-    });
+      const data = await this.prisma.category.findMany({
+          select: { name: true, slug: true, id: true, image: true, products: true },
+      });
+      return data;
   }
 }

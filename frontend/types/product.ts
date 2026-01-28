@@ -7,7 +7,18 @@ export interface INewProduct {
     shortDesc: string;
 }
 export interface ICategory {
-
+    id: number;
+    name: string;
+    slug: string;
+    image: string;
+}
+export interface ISection{
+    id: number;
+    title: string;
+    text: string,
+    image?: string;
+    video?: string;
+    order:number
 }
 export interface IProduct {
     id: number;
@@ -20,6 +31,8 @@ export interface IProduct {
     gallery: string[];
     videoUrl: string | "null" | null;
     specs: Record<string, string | number>;
+    sections: ISection[];
+    categories: ICategory[] | ICategory;
     createdAt: string;
     updatedAt: string;
 }
@@ -32,6 +45,6 @@ export interface IFetchedProducts {
         total: number;
     };
     data: {
-        products:never
+        products:IProduct | IProduct[];
     }
 }

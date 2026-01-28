@@ -179,7 +179,12 @@ export class ProductsController {
 
     return this.productsService.updateProduct(+id, updateData);
   }
-  @Delete(':id')
+    @Get("categories")
+    async getAllCategories() {
+        return this.productsService.getAllCategories();
+    }
+
+    @Delete(':id')
   @UseGuards(JwtAuthGuard)
   @Roles(Role.ADMIN)
   async deleteProduct(@Param('id') id: string) {
@@ -201,13 +206,14 @@ export class ProductsController {
   @Patch(":slug/categories")
   @UseGuards(JwtAuthGuard)
   @Roles(Role.ADMIN)
-  async addCategoriesToExists(@Param('slug') slug: string, dto: SetProductCategoriesDto) {
+  async addCategoriesToExists(@Param('slug') slug: string, @Body() dto: SetProductCategoriesDto) {
     return this.productsService.addCategories(slug, dto);
   }
 
+
   @Post("categories")
-  // @UseGuards(JwtAuthGuard)
-  // @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN)
   @UseInterceptors(
     FileFieldsInterceptor([
       {name: "image", maxCount: 1}
@@ -244,8 +250,5 @@ export class ProductsController {
 
     return this.productsService.deleteCategory(slug);
   }
-  @Get("categories")
-  async getAllCategories(){
-    return this.productsService.getAllCategories();
-  }
+
 }

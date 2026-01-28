@@ -17,6 +17,7 @@ export const API = {
                 },
                 setCategories: (slug: string) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/${slug}/categories`,
                 addCategoriesToExists: (slug: string) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/${slug}/categories`,
+                getAllCategories: `${env.NEXT_PUBLIC_BACKEND_URL}/products/categories`,
             }
         },
 

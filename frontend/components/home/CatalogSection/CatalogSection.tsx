@@ -36,15 +36,6 @@ export default async function CatalogSection(){
                 {products.map((p) => (
                     <CatalogItem title={p.name} price={p.price} slug={p.slug} imageUrl={p.mainImage} key={p.slug} oldPrice={30000} />
                 ))}
-                {products.map((p) => (
-                    <CatalogItem title={p.name} price={p.price} slug={p.slug} imageUrl={p.mainImage} key={p.slug} />
-                ))}
-                {products.map((p) => (
-                    <CatalogItem title={p.name} price={p.price} slug={p.slug} imageUrl={p.mainImage} key={p.slug} />
-                ))}
-                {products.map((p) => (
-                    <CatalogItem title={p.name} price={p.price} slug={p.slug} imageUrl={p.mainImage} key={p.slug} />
-                ))}
             </div>
             <div>
                 <Link href={PAGES.STORE()}>
