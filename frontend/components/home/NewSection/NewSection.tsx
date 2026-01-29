@@ -21,17 +21,26 @@ async function getData(quantity: number) {
     return data;
 
 }
+const cut = (s: string, n = 120) =>
+    s.length > n ? s.slice(0, n).trimEnd() + "…" : s;
 
 export default async function NewSection() {
     const products: INewProduct[] = await getData(env.NEXT_PUBLIC_RENDER_NEW_PRODUCT_QUANTITY);
-    console.log(products)
+
     return (
         <div className={styles.container}>
             <h2>Нове на сайті</h2>
 
             <div className={styles.itemsContainer}>
                 {products.map((product) => (
-                    <NewItem key={product.slug} imageUrl={product.mainImage} title={product.name} subtitle={product.shortDesc} price={product.price} slug={product.slug}/>
+                    <NewItem
+                        key={product.slug}
+                        imageUrl={product.mainImage}
+                        title={product.name}
+                        subtitle={cut(product.shortDesc, 120)}
+                        price={product.price}
+                        slug={product.slug}
+                    />
                 ))}
             </div>
         </div>

@@ -16,7 +16,7 @@ const NewItem: React.FC<NewItemProps> = ({ imageUrl, slug, title, subtitle, pric
 
   return (
           <div className={styles.container}>
-              <div style={{ width: "100%", height: "50%", display:"flex", justifyContent: "center", position: "relative", bottom:"170px", cursor:"default" }}>
+              <div className={styles.imageBox}>
                   <Image src={imageUrl} alt={title} width={361} height={361} />
               </div>
                   <div className={styles.textInfo}>

@@ -12,10 +12,15 @@
 
 .imageWrapper{
     width: 100%;
-    height: 50%;
+    height: auto;
     display: flex;
     justify-content: center;
     cursor: default;
+}
+.imageWrapper :global(img){
+    width: 161px;
+    height: auto;
+    object-fit: contain;
 }
 .imageWrapper img {
     width: 161px;
