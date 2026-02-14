@@ -7,7 +7,7 @@ export interface INewProduct {
     shortDesc: string;
 }
 export interface ICategory {
-    id: number;
+    id: string;
     name: string;
     slug: string;
     image: string;
@@ -25,7 +25,7 @@ export interface IProduct {
     name: string;
     slug: string;
     price: number;
-    oldPrice: number | "null" | null;
+    oldPrice: number | undefined;
     shortDesc: string;
     mainImage: string;
     gallery: string[];

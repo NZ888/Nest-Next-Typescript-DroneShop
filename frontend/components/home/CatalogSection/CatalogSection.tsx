@@ -27,6 +27,7 @@ async function getData(quantity: number) {
 
 export default async function CatalogSection(){
     const products: INewProduct[] = await getData(env.NEXT_PUBLIC_RENDER_NEW_PRODUCT_QUANTITY);
+    console.log(products);
     return (
         <div className={styles.container}>
             <div className={styles.article}>

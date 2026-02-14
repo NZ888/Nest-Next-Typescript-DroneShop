@@ -1,0 +1,11 @@
+.categoryBubble{
+    border: 1px solid var(--blue-10);
+    border-radius: 80px;
+    width: 60px;
+    height: 60px;
+    background: var(--secondary-40);
+}
+.categoryBubble:global(img) {
+    width: 60px;
+    height: 60px;
+}

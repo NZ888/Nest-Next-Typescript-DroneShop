@@ -6,6 +6,14 @@
     flex-direction: column;
     gap: 20px;
 }
+.bigItem{
+    display: flex;
+    padding: 14px;
+    width: auto;
+    height: auto;
+    flex-direction: column;
+    gap: 20px;
+}
 .textInfo {
 
 }
@@ -25,6 +33,22 @@
 .imageWrapper img {
     width: 161px;
     height: 100px;
+}
+.bigImageWrapper{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    cursor: default;
+}
+.bigImageWrapper :global(img){
+    width: 261px;
+    height: auto;
+    object-fit: contain;
+}
+.bigImageWrapper img {
+    width: 261px;
+    height: 261px;
 }
 .textInfo a{
     text-decoration: none;

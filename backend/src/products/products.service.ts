@@ -1,9 +1,9 @@
-import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException, } from '@nestjs/common';
-import { CreateProductDto } from '@/products/dto/create-product.dto';
-import { PrismaService } from '@/prisma/prisma.service';
-import { CloudinaryService } from '@/cloudinary/cloudinary.service';
-import { SetProductCategoriesDto } from '@/products/dto/set-product-category.dto';
-import { CreateCategoryDto } from '@/products/dto/create-category.dto';
+import {BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException,} from '@nestjs/common';
+import {CreateProductDto} from '@/products/dto/create-product.dto';
+import {PrismaService} from '@/prisma/prisma.service';
+import {CloudinaryService} from '@/cloudinary/cloudinary.service';
+import {SetProductCategoriesDto} from '@/products/dto/set-product-category.dto';
+import {CreateCategoryDto} from '@/products/dto/create-category.dto';
 
 @Injectable()
 export class ProductsService {
@@ -42,7 +42,10 @@ export class ProductsService {
           this.prisma.product.findMany({
               skip: skip,
               take: limit,
-              orderBy: {createdAt:"desc"}
+              orderBy: {createdAt:"desc"},
+              include: {
+                  categories: true
+              }
           }),
           this.prisma.product.count()
       ])
@@ -211,9 +214,15 @@ export class ProductsService {
     return { ok: true };
   }
   async getAllCategories() {
-      const data = await this.prisma.category.findMany({
-          select: { name: true, slug: true, id: true, image: true, products: true },
+
+      return this.prisma.category.findMany({
+          select: {
+              name: true,
+              slug: true,
+              id: true,
+              image: true,
+              products: true,
+          },
       });
-      return data;
   }
 }

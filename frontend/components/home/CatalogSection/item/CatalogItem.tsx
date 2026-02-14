@@ -9,13 +9,16 @@ interface CatalogItemProps {
   oldPrice?: number;
   slug: string;
   imageUrl: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  mainCatalog?: boolean;
 }
 
-const CatalogItem: React.FC<CatalogItemProps> = ({ title, price, oldPrice, slug, imageUrl }) => {
+const CatalogItem: React.FC<CatalogItemProps> = ({ title, price, oldPrice, slug, imageUrl, imageHeight, imageWidth, mainCatalog }) => {
   return (
-    <div className={styles.item}>
-        <div className={styles.imageWrapper}>
-            <Image src={imageUrl} alt={title} width={161} height={100} />
+    <div className={ mainCatalog ? styles.bigItem : styles.item}>
+        <div className={ mainCatalog ? styles.bigImageWrapper : styles.imageWrapper}>
+            <Image src={imageUrl} alt={title} width={ imageWidth ? imageWidth : 161} height={ imageHeight ? imageHeight : 100} />
         </div>
         <div className={styles.textInfo}>
             <Link className={styles.a} href={PAGES.PRODUCT(slug)}>
