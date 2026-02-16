@@ -7,10 +7,14 @@ import { ProductsModule } from './products/products.module';
 import { MailModule } from './mail/mail.module';
 import { FeedbackModule } from './feedback/feedback.module';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { validationSchema } from '@/joi.env.validation';
+
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      validationSchema,
+      validationOptions: {abortEarly: false},
     }),
     ThrottlerModule.forRoot([{
       ttl: 60,
