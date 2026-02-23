@@ -32,7 +32,7 @@ export interface IProduct {
     videoUrl: string | "null" | null;
     specs: Record<string, string | number>;
     sections: ISection[];
-    categories: ICategory[] | ICategory;
+    categories: ICategory[];
     createdAt: string;
     updatedAt: string;
 }

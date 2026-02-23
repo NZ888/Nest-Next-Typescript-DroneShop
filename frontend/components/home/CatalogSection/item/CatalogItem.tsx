@@ -18,7 +18,7 @@ const CatalogItem: React.FC<CatalogItemProps> = ({ title, price, oldPrice, slug,
   return (
     <div className={ mainCatalog ? styles.bigItem : styles.item}>
         <div className={ mainCatalog ? styles.bigImageWrapper : styles.imageWrapper}>
-            <Image src={imageUrl} alt={title} width={ imageWidth ? imageWidth : 161} height={ imageHeight ? imageHeight : 100} />
+            <Image src={imageUrl} alt={title} width={ imageWidth ? imageWidth : 161} height={ imageHeight ? imageHeight : 100} draggable={false}/>
         </div>
         <div className={styles.textInfo}>
             <Link className={styles.a} href={PAGES.PRODUCT(slug)}>

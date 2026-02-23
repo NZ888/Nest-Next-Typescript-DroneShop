@@ -23,7 +23,8 @@ export class ProductsService {
         mainImage: dto.mainImage,
         gallery: dto.gallery,
         videoUrl: dto.videoUrl,
-        specs: dto.specs, sections: sections.length ? { create: sections } : undefined,
+        specs: dto.specs,
+          sections: sections.length ? { create: sections } : undefined,
         categories: dto.categories?.length
           ? {
             connectOrCreate: dto.categories.map((c) => ({

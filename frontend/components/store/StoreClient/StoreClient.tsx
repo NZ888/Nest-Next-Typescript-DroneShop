@@ -5,12 +5,11 @@ import { IProduct } from "@/types/product";
 import { MainCatalogComponent } from "@/components/store/Catalog/MainCatalogComponent";
 import { CategoriesBubbles } from "@/components/store/Categories/CategoriesBubbles";
 import {toArray} from "@/lib/helpers";
-
-type Category = { id: string; name: string; image?: string };
+import type {ICategory} from "@/types/product"
 
 type Props = {
     products: IProduct[];
-    categories: Category[];
+    categories: ICategory[];
 };
 
 export default function StoreClient({ products, categories }: Props) {
@@ -28,7 +27,7 @@ export default function StoreClient({ products, categories }: Props) {
             <CategoriesBubbles
                 categories={categories}
                 selectedId={selectedCategoryId}
-                onSelect={setSelectedCategoryId}
+                onSelectAction={setSelectedCategoryId}
             />
             <MainCatalogComponent products={filtered} />
         </>

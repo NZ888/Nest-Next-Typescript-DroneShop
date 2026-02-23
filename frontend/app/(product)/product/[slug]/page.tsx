@@ -1,7 +1,14 @@
+import ProductPage from "@/components/product/ProductPage";
 
+interface Props {
+    params: {
+        slug: string;
+    }
+}
 
-export default function Product(){
+export default async function Product({params}: Props){
+    const {slug} = await params;
     return (
-        <h1>Product</h1>
+        <ProductPage slug={slug}/>
     )
 }

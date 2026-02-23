@@ -1,28 +1,29 @@
 "use client";
 import styles from "./CategoriesBubbles.module.css"
-type Category = { id: string; name: string; image?: string };
+import Image from "next/image";
+import type {ICategory} from "@/types/product"
 
 type Props = {
-    categories: Category[];
+    categories: ICategory[];
     selectedId: string | null;
-    onSelect: (id: string | null) => void;
+    onSelectAction: (id: string | null) => void;
 };
 
-export function CategoriesBubbles({ categories, selectedId, onSelect }: Props) {
+export function CategoriesBubbles({ categories, selectedId, onSelectAction }: Props) {
     return (
         <div className={styles.categoriesBubbles}>
-            <button onClick={() => onSelect(null)} className={styles.categoryBubble} >
+            <button onClick={() => onSelectAction(null)} className={styles.categoryBubble} >
                 Всі
             </button>
 
             {categories.map((c) => (
                 <button
                     key={c.id}
-                    onClick={() => onSelect(c.id)}
+                    onClick={() => onSelectAction(c.id)}
                     className={styles.categoryBubble}
                     title={c.name}
                 >
-                    {c.name.slice(0, 2)}
+                    <Image src={c.image} alt={c.name} width={50} height={50} draggable={false}/>
                 </button>
             ))}
         </div>

@@ -2,8 +2,7 @@ import Header from "@/components/layout/Header/Header";
 import Footer from "@/components/layout/Footer/Footer";
 import {API} from "@/config/api";
 import {handleResponse} from "@/lib/helpers";
-import { IFetchedProducts} from "@/types/product"
-import {MainCatalogComponent} from "@/components/store/Catalog/MainCatalogComponent";
+import {ICategory, IFetchedProducts, IProduct} from "@/types/product"
 import StoreClient from "@/components/store/StoreClient/StoreClient";
 export default async function StorePage(){
 
@@ -12,15 +11,15 @@ export default async function StorePage(){
     })
     const fetchedProducts: IFetchedProducts = await handleResponse(res)
     const {data} = fetchedProducts
-    const products = Array.isArray(data.products) ? data.products : [data.products];
-    console.log(products)
+    const products: IProduct[] = Array.isArray(data.products) ? data.products : [data.products];
+
     const categoriesMap = new Map<
         string,
-        { id: string; name: string; image?: string }
+        { id: string; name: string; image: string, slug: string }
     >();
 
     for (const p of products) {
-        const categories = Array.isArray(p.categories)
+        const categories: ICategory[] = Array.isArray(p.categories)
             ? p.categories
             : p.categories
                 ? [p.categories]
@@ -31,11 +30,12 @@ export default async function StorePage(){
                 id: c.id,
                 name: c.name,
                 image: c.image,
+                slug: c.slug
             });
         }
     }
 
-    const categories = Array.from(categoriesMap.values());
+    const categories: ICategory[] = Array.from(categoriesMap.values());
     console.log(categories);
     return (
         <>

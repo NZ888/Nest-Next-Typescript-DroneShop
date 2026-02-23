@@ -9,3 +9,9 @@
     width: 60px;
     height: 60px;
 }
+.categoriesBubbles{
+    margin-top: 15px;
+    display: flex;
+    gap: 15px;
+    margin-left: 1rem;
+}
