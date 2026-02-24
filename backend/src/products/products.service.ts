@@ -68,7 +68,10 @@ export class ProductsService {
   }
   async getProductBySlug(slug: string){
     return this.prisma.product.findUnique({
-      where: {slug: slug}
+      where: {slug: slug},
+        include:{
+          sections: {orderBy: {order: 'asc'}},
+        }
     })
   }
   async getSomeNewProducts(quantity: number) {

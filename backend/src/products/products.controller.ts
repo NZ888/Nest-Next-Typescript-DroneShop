@@ -82,7 +82,7 @@ export class ProductsController {
         }),
       );
     }
-    console.log('SECTIONS AFTER PARSE:', dto.sections);
+
 
     return this.productsService.createProduct({
       ...dto,
