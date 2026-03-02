@@ -40,3 +40,14 @@ export function toArray<T>(value: T | T[] | null | undefined): T[] {
     return Array.isArray(value) ? value : value ? [value] : [];
 }
 
+export function getYoutubeEmbedUrl(url: string) {
+    const regex =
+        /(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([^?&]+)/;
+
+    const match = url.match(regex);
+    const videoId = match ? match[1] : null;
+
+    return videoId
+        ? `https://www.youtube.com/embed/${videoId}`
+        : "";
+}

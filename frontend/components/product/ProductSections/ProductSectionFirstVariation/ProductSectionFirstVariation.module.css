@@ -1,0 +1,35 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 160px;
+    width: 100%;
+}
+.infoContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    width: 45%;
+    height: auto;
+}
+.infoContainer h2{
+    font-weight: 400;
+    font-size: 44px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--blue-100);
+}
+.infoContainer p{
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 0.03em;
+    color: var(--blue-80);
+}
+.imageContainer{
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
