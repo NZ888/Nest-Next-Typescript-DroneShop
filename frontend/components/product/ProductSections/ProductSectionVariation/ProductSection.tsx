@@ -1,8 +1,14 @@
-import styles from "./ProductSectionFirstVariation.module.css"
+import styles from "./ProductSection.module.css"
 import {ISection} from "@/types/product";
 import Image from "next/image";
+import {Variation} from "@/components/product/RenderProductSections/RenderProductSection";
 
-export default async function ProductSectionFirstVariation(section : ISection){
+
+type Section = ISection & {
+    variation: Variation
+}
+
+export default async function ProductSection(section : Section){
     const {image} = section;
     let imageUrl:string = "";
     if(image){
@@ -10,7 +16,7 @@ export default async function ProductSectionFirstVariation(section : ISection){
     }
     return (
         <>
-            <div className={styles.container}>
+            <div className={ section.variation === "FIRST" ? styles.container : styles.containerSecondVariant} >
                 <div className={styles.infoContainer}>
                     <h2>{section.title}</h2>
                     <p>{section.text}</p>

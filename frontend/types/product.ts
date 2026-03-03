@@ -20,6 +20,14 @@ export interface ISection{
     video?: string;
     order:number
 }
+export interface ISpecs{
+    key: string;
+    type: string;
+    order: number;
+    unit?: string;
+    value: string;
+    labelUk: string;
+}
 export interface IProduct {
     id: number;
     name: string;
@@ -30,7 +38,8 @@ export interface IProduct {
     mainImage: string;
     gallery: string[];
     videoUrl: string | "null" | null;
-    specs: Record<string, string | number>;
+    // specs: Record<string, string | number>;
+    specs:  ISpecs[];
     sections: ISection[];
     categories: ICategory[];
     createdAt: string;

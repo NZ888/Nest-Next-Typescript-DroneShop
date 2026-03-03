@@ -1,26 +1,32 @@
-import {ISection} from "@/types/product";
+import {ISection, ISpecs} from "@/types/product";
 import HeaderProductSection from "@/components/product/ProductSections/HeaderProductSection";
-import ProductSectionFirstVariation
-    from "@/components/product/ProductSections/ProductSectionFirstVariation/ProductSectionFirstVariation";
+import ProductSection from "@/components/product/ProductSections/ProductSectionVariation/ProductSection";
+import FooterProductSection from "@/components/product/ProductSections/FooterProductSection/FooterProductSection";
+
+export type Variation = "FIRST" | "SECOND";
 
 type Section = ISection & {
     iteration: number;
     arrayLength: number;
+    specs: ISpecs[]
 }
 
-export default async function RenderProductSection(section : Section) {
+export default function RenderProductSection(section : Section) {
+    let renderSectionVariation: Variation;
     if(section.order === 1){
         return <HeaderProductSection id={section.id} title={section.title} text={section.text} order={section.order} image={section.image} video={section.video} />
     }
     if(section.iteration === section.arrayLength){
-        return <h2>order end</h2>
+        return <FooterProductSection image={section.image} video={section.video} key={section.id} id={section.id} title={section.title} text={section.text} order={section.order} specs={section.specs}/>
     }
 
     if(section.order !== 1 && section.iteration !== section.arrayLength && section.order % 2 === 0){
-        return <ProductSectionFirstVariation id={section.id} title={section.title} text={section.text} order={section.order} image={section.image} video={section.video} />
+        renderSectionVariation = "FIRST";
+        return <ProductSection id={section.id} variation={renderSectionVariation} title={section.title} text={section.text} order={section.order} image={section.image} video={section.video} />
     }
     else {
-        return <h2>suborder2</h2>
+        renderSectionVariation = "SECOND";
+        return <ProductSection id={section.id} variation={renderSectionVariation} title={section.title} text={section.text} order={section.order} image={section.image} video={section.video} />
     }
 
 }

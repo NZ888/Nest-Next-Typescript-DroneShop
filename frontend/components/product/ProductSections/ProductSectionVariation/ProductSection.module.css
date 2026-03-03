@@ -33,3 +33,13 @@
     justify-content: center;
     align-items: center;
 }
+
+.containerSecondVariant {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 160px;
+    width: 100%;
+}
