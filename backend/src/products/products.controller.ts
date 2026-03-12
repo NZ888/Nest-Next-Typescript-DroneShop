@@ -104,6 +104,12 @@ export class ProductsController {
       const limit:number = Number(query.limit);
       return this.productsService.getAll(page, limit);
   }
+  @Get("byCategories")
+  async getProductsByCategories(@Query() query: GetProductsDto, @Query("categorySlug") slug: string){
+      const page:number = Number(query.page);
+      const limit:number = Number(query.limit);
+      return this.productsService.getProductsByCategories(slug, page, limit)
+  }
   @Get("new")
   async getSomeNewProducts(@Query('quantity') quantity: string) {
       const num = Number(quantity);
@@ -196,9 +202,11 @@ export class ProductsController {
     return this.productsService.getProductBySlug(slug);
   }
 
+
+
   @Put(":slug/categories")
-  // @UseGuards(JwtAuthGuard)
-  // @Roles(Role.ADMIN)
+  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ADMIN)
   async setCategories(@Param('slug') slug: string, @Body() dto: SetProductCategoriesDto) {
     return this.productsService.setCategories(slug, dto);
   }

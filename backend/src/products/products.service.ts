@@ -4,7 +4,8 @@ import {PrismaService} from '@/prisma/prisma.service';
 import {CloudinaryService} from '@/cloudinary/cloudinary.service';
 import {SetProductCategoriesDto} from '@/products/dto/set-product-category.dto';
 import {CreateCategoryDto} from '@/products/dto/create-category.dto';
-
+import type {CategoryModel} from "../../generated/prisma/models/Category"
+import {GetProductsByCategoryDto} from "@/products/dto/get-Products-By-Category.dto";
 @Injectable()
 export class ProductsService {
   constructor(private prisma: PrismaService, private cloudinaryService: CloudinaryService) {}
@@ -71,6 +72,7 @@ export class ProductsService {
       where: {slug: slug},
         include:{
           sections: {orderBy: {order: 'asc'}},
+            categories: {orderBy: {id: 'asc'}}
         }
     })
   }
@@ -137,6 +139,43 @@ export class ProductsService {
 
     await this.prisma.section.deleteMany({ where: { productId: id } });
     return this.prisma.product.delete({ where: { id } });
+  }
+  async getProductsByCategories(categorySlug: string, page: number = 1, limit: number = 16){
+    const skip = (page - 1) * limit;
+    const where = {
+        categories:{
+            some:{
+                slug: categorySlug,
+            }
+        }
+    }
+    const [products, total] = await Promise.all([
+      this.prisma.product.findMany({
+          where,
+        skip: skip,
+        take: limit,
+        orderBy: {createdAt:"desc"},
+        include: {
+          categories: true
+        }
+      }),
+      this.prisma.product.count({where})
+    ])
+    const totalPages: number = Math.ceil(total / limit);
+    return {
+      message: products.length
+        ? 'List of all products'
+        : 'No products found.',
+      status: products.length ? HttpStatus.OK : HttpStatus.NOT_FOUND,
+      pagination: {
+        page: page,
+        limit: limit,
+        totalPages: totalPages,
+      },
+      data: {
+        products: products,
+      },
+    };
   }
   async setCategories(productSlug: string, dto: SetProductCategoriesDto){
     const product = await this.prisma.product.findUnique({

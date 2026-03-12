@@ -29,6 +29,7 @@
     color: var(--blue-80);
 }
 .specsContainer{
+    margin-top: 44px;
     display: flex;
     gap: 277px;
 }

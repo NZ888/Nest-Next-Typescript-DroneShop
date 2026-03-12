@@ -11,15 +11,14 @@ export default async function ProductPage({slug}: {slug: string}) {
         next: {revalidate: 60}
     });
     const product: IProduct = await handleResponse(res)
-
-    console.log(product);
-
+    const {categories} = product;
+    console.log(product.categories)
     return (
         <>
             <Header/>
             <IntroProductSection slug={product.slug} name={product.name} price={product.price} oldPrice={product.oldPrice} mainImage={product.mainImage} shortDesc={product.shortDesc} />
             {product.sections && product.sections.map((section, index) => (
-                <RenderProductSection key={section.id} specs={product.specs} arrayLength={product.sections.length} iteration={index + 1} id={section.id} order={section.order} text={section.text} image={section.image} video={section.video} title={section.title} />
+                <RenderProductSection key={section.id} categories={categories} specs={product.specs} arrayLength={product.sections.length} iteration={index + 1} id={section.id} order={section.order} text={section.text} image={section.image} video={section.video} title={section.title} />
             ))}
             <Footer/>
         </>

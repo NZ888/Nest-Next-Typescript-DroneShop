@@ -24,12 +24,12 @@ export default  function FooterProductSection(section: SectionProps) {
                     {section.text}
                 </p>
             </div>
+            <Image style={{marginTop: "44px"}} src={imageUrl} alt="image" width={668} height={450} />
             <div className={styles.specsContainer}>
                 {section.specs.map((spec) => (
                     <Spec key={spec.key} unit={spec.unit} type={spec.type} order={spec.order} value={spec.value} labelUk={spec.labelUk}/>
                     ))}
             </div>
-            <Image style={{marginTop: "44px"}} src={imageUrl} alt="image" width={668} height={450} />
         </div>
     )
 }
