@@ -22,7 +22,9 @@ export default async function ProductSection(section : Section){
                     <p>{section.text}</p>
                 </div>
                 <div className={styles.imageContainer}>
-                    <Image src={imageUrl} alt="image" width={668} height={450} />
+                    {imageUrl &&(
+                        <Image src={imageUrl} alt="image" width={668} height={450} />
+                    )}
                 </div>
             </div>
         </>

@@ -46,6 +46,7 @@ export default async function HeaderProductSection(section : ISection){
     if(section.video){
         videoUrl = section.video
     }
+
     return(
         <>
             <div style={styles.container}>
