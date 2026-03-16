@@ -1,4 +1,5 @@
 import {API} from "@/config/api"
+import {authFetch} from "@/shared/api/apiFetch";
 
 export const sendResetCode = async (email: string) => {
     const res = await fetch(API.routes.auth.sendResetCode, {
@@ -90,25 +91,26 @@ export const logout = async () => {
 };
 
 export const refresh = async () => {
-    await fetch(API.routes.auth.refresh, {
+    const res = await fetch(API.routes.auth.refresh, {
         method: "POST",
         credentials: "include",
     });
+    if(!res.ok){
+        throw new Error("Refresh failed")
+    }
+    return res.json()
 };
 
 export const getMe = async () => {
-    const res = await fetch(API.routes.auth.me, {
+    const res = await authFetch(API.routes.auth.me, {
         method: "GET",
         credentials: "include",
     });
-
-    if (res.status === 401) return null;
 
     if (!res.ok) {
         const err = await res.json().catch(() => ({}));
         throw new Error(err.message || "Failed to load user");
     }
-
     return res.json();
 };
 

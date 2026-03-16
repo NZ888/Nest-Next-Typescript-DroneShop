@@ -6,10 +6,11 @@ import { AnimatePresence, motion } from "framer-motion";
 interface ModalProps {
   children: ReactNode;
   isOpen: boolean;
+  title?: string;
   setIsOpen: (isOpen: boolean) => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ children, isOpen, setIsOpen}) => {
+const Modal: React.FC<ModalProps> = ({ children, isOpen, setIsOpen, title}) => {
   return (
       <Portal>
         <AnimatePresence mode="wait">
@@ -33,6 +34,9 @@ const Modal: React.FC<ModalProps> = ({ children, isOpen, setIsOpen}) => {
                     transition={{ duration: 0.2 }}
                 >
                   <div className={styles.modalClose}>
+                      {title && (
+                          <p>{title}</p>
+                      )}
                     <svg
                         style={{ cursor: "pointer" }}
                         onClick={() => setIsOpen(false)}
