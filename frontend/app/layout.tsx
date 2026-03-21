@@ -4,7 +4,7 @@ import {site} from "@/config/site"
 import "@/styles/globals.css"
 import {QueryProvider} from "@/providers/query-provider";
 import {NotificationProvider} from "@/providers/NotificationProvider";
-
+import StoreProvider from "@/providers/StoreProvider";
 const manrope = Manrope({
     subsets: ["latin", "cyrillic"],
     variable: "--font-manrope",
@@ -29,12 +29,14 @@ export default function RootLayout({
         className={`${manrope.variable} antialiased`}
         suppressHydrationWarning
       >
-      <QueryProvider>
-          <NotificationProvider>
-              {children}
-          </NotificationProvider>
-      </QueryProvider>
-        <div id="portal-root"></div>
+      <StoreProvider>
+          <QueryProvider>
+              <NotificationProvider>
+                  {children}
+              </NotificationProvider>
+          </QueryProvider>
+            <div id="portal-root"></div>
+      </StoreProvider>
       </body>
     </html>
   );

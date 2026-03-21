@@ -12,6 +12,8 @@ import { RegisterDto } from "@/auth/dto/register.dto";
 import { LoginDto } from "@/auth/dto/login.dto";
 import { Response, Request } from "express";
 import { JwtAuthGuard } from "@/auth/jwt/jwt-auth.guard";
+import {UserDecorator} from "@/auth/decorators/user.decorator";
+import {IUser} from "@/auth/interfaces/user.interface";
 
 @Controller("auth")
 export class AuthController {
@@ -80,10 +82,8 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get("me")
-  me(@Req() req: Request) {
-
-    // @ts-ignore
-    return req.user;
+  me(@UserDecorator() user: IUser) {
+      return user
   }
 
   @Post("send-reset-code")
