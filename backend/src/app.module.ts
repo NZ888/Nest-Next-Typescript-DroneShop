@@ -8,6 +8,7 @@ import { MailModule } from './mail/mail.module';
 import { FeedbackModule } from './feedback/feedback.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { validationSchema } from '@/joi.env.validation';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
@@ -20,6 +21,9 @@ import { validationSchema } from '@/joi.env.validation';
       ttl: 60,
       limit: 10,
     }]),
+    CacheModule.register({
+      isGlobal: true,
+    }),
     PrismaModule,
     AuthModule,
     CloudinaryModule,

@@ -10,7 +10,7 @@ interface CartModalProps {
 const CartModal: React.FC<CartModalProps> = ({ isOpen, setIsOpen }: CartModalProps) => {
   return (
     <Modal isOpen={isOpen} setIsOpen={setIsOpen} title={"Кошик"}>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis delectus deleniti dignissimos dolor earum incidunt magnam maiores modi, natus neque nesciunt officia, optio quos reiciendis reprehenderit sed similique ut vero.</p>
+        <p>1</p>
     </Modal>
   );
 };
