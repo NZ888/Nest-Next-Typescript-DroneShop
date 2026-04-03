@@ -1,0 +1,16 @@
+.container{
+    display: flex;
+    padding: 16px 24px;
+    min-width: 638px;
+    min-height: 345px;
+    justify-content: center;
+}
+.container p {
+
+}
+.alert p{
+    font-weight: 400;
+    font-size: 20px;
+    text-align: center;
+    color: var(--blue-60);
+}

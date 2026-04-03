@@ -1,7 +1,7 @@
 import {IProduct} from "@/types/product";
 
 export type TCartItem = {
-    product: Pick<IProduct, "id" | "name" | "price" | "oldPrice" | "slug">
+    product: Pick<IProduct, "id" | "name" | "price" | "oldPrice" | "slug" | "mainImage">
     count: number;
 }
 

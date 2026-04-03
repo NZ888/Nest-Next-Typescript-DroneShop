@@ -1,3 +1,4 @@
+"use client";
 import {IProduct} from "@/types/product";
 import styles from "./IntroProductSection.module.css";
 import Image from "next/image";
@@ -5,10 +6,28 @@ import SolidButton from "@/components/ui/SolidBtn/SolidButton";
 import Link from "next/link";
 import {PAGES} from "@/config/pages.config";
 import CartBtn from "@/components/product/IntroProductSection/CartBtn";
+import {useAppDispatch} from "@/store/redux-toolkit/hooks";
+import {addToCart} from "@/store/redux-toolkit/slices/cart/cart.slice";
+import {TCartItem} from "@/types/cart";
 
-type IntroProductSectionProps = Pick<IProduct, "name" | "slug" | "price" | "mainImage" | "oldPrice" | "shortDesc">
+type IntroProductSectionProps = Pick<IProduct, "name" | "slug" | "price" | "mainImage" | "oldPrice" | "shortDesc" | "id">
 
-export default async function IntroProductSection(product: IntroProductSectionProps){
+export default function IntroProductSection(product: IntroProductSectionProps){
+    const dispatch = useAppDispatch()
+    const mayCartItem: TCartItem = {
+        product: {
+            name: product.name,
+            price: product.price,
+            oldPrice: product.oldPrice,
+            mainImage: product.mainImage,
+            slug: product.slug,
+            id: product.id
+        },
+        count: 1
+    }
+    const addProductToReduxStore = ()=>{
+        dispatch(addToCart(mayCartItem))
+    }
     return (
     <div className={styles.container}>
         <h2>
@@ -44,7 +63,7 @@ export default async function IntroProductSection(product: IntroProductSectionPr
                         </div>
                     </div>
                     <div className={styles.ordersBtns}>
-                        <CartBtn/>
+                        <CartBtn onClick={addProductToReduxStore}/>
                         <SolidButton>
                             <Link style={{textDecoration: "none", color:"white"}} href={PAGES.STORE()}>ЗАМОВИТИ </Link>
                         </SolidButton>

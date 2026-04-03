@@ -1,0 +1,68 @@
+.container{
+    width: 590px;
+    display: flex;
+    gap: 147px;
+    height: 102px;
+    padding: 8px;
+}
+.infoContainer{
+    display: flex;
+    gap: 26px;
+}
+.imageContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    width: 108px;
+    height: 86px;
+    background: var(--secondary-40);
+}
+.descriptionContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.title a{
+    font-weight: 500;
+    font-size: 24px;
+    color: var(--blue-100);
+    text-decoration: none;
+}
+.price{
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--alert);
+}
+.oldPrice{
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: line-through;
+    color: var(--blue-100);
+}
+.interactiveContainer{
+    display: flex;
+    gap: 26px;
+}
+.counterContainer{
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+}
+.changeCountBtn{
+    border: 2px solid var(--blue-10);
+    border-radius: 42px;
+    padding: 10px;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.counterText{
+    font-weight: 400;
+    font-size: 24px;
+    color: var(--blue-100);
+}
