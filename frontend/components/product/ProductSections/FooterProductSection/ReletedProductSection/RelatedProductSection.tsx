@@ -23,7 +23,6 @@ async function getData(slug: string) {
 export async function RelatedProductSection( categories : RelatedProductSectionProps){
     const cSlug = categories.categories[0].slug
     const products: IProduct[] = await getData(cSlug);
-    console.log(products);
     return(
         <div className={styles.container}>
             <div className={styles.article}>

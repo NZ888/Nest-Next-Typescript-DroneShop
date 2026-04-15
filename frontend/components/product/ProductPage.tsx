@@ -12,7 +12,6 @@ export default async function ProductPage({slug}: {slug: string}) {
     });
     const product: IProduct = await handleResponse(res)
     const {categories} = product;
-    console.log(product.categories)
     return (
         <>
             <Header/>

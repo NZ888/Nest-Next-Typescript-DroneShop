@@ -3,7 +3,7 @@
     padding: 16px 24px;
     min-width: 638px;
     min-height: 345px;
-    justify-content: center;
+    flex-direction: column;
 }
 .container p {
 

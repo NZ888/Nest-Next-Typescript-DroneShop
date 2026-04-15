@@ -8,6 +8,8 @@ import AuthModal from "@/features/auth/components/AuthModal/AuthModal";
 import {useRouter} from "next/navigation";
 import {PAGES} from "@/config/pages.config";
 import CartModal from "@/features/cart/components/CartModal/CartModal";
+import {useAppSelector} from "@/store/redux-toolkit/hooks";
+import {selectCartCount} from "@/store/redux-toolkit/selectors/CartSelector";
 
 interface CartAndUserProps{
     menuOpen:boolean;
@@ -19,6 +21,7 @@ const CartAndUser: React.FC<CartAndUserProps> = ({ toggleMenu }) => {
     const [isOpenCart, setIsOpenCart] = React.useState(false);
     const {isAuthenticated, user} = useAuth();
     const router = useRouter();
+    const amountItemsInCart: number = useAppSelector(selectCartCount)
     const renderDashBoardOrLogin = () => {
         if (isAuthenticated && user) {
             router.push(PAGES.DASHBOARD(user.uuid));
@@ -39,7 +42,11 @@ const CartAndUser: React.FC<CartAndUserProps> = ({ toggleMenu }) => {
                   <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path fillRule="evenodd" clipRule="evenodd" d="M5.46447 1.46447C6.40215 0.526784 7.67392 0 9 0C10.3261 0 11.5979 0.526784 12.5355 1.46447C13.4732 2.40215 14 3.67392 14 5V6H16C16.5201 6 16.9534 6.39866 16.9965 6.91695L17.9965 18.917C18.0198 19.1956 17.9252 19.4713 17.7359 19.6771C17.5465 19.8829 17.2797 20 17 20H1C0.720351 20 0.453476 19.8829 0.264121 19.6771C0.0747659 19.4713 -0.0197664 19.1956 0.00345746 18.917L1.00346 6.91695C1.04665 6.39866 1.47991 6 2 6H4V5C4 3.67392 4.52679 2.40215 5.46447 1.46447ZM4 8V9C4 9.55229 4.44772 10 5 10C5.55229 10 6 9.55229 6 9V8H12V9C12 9.55229 12.4477 10 13 10C13.5523 10 14 9.55229 14 9V8H15.0799L15.9132 18H2.0868L2.92014 8H4ZM12 6H6V5C6 4.20435 6.31607 3.44129 6.87868 2.87868C7.44129 2.31607 8.20435 2 9 2C9.79565 2 10.5587 2.31607 11.1213 2.87868C11.6839 3.44129 12 4.20435 12 5V6Z" fill="#9EA0AA" style={{ fill: "color(display-p3 0.6196 0.6275 0.6667)", fillOpacity: "1" }} />
                   </svg>
-                  <Badge value={1} top={-6} right={-9} />
+                  {amountItemsInCart >= 1
+                      ? <Badge value={amountItemsInCart} top={-6} right={-9} />
+                      : null
+                  }
+
               </div>
           <div onClick={renderDashBoardOrLogin}>
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{cursor:"pointer"}}>

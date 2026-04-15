@@ -6,7 +6,7 @@ const initialState: ICartState = {
     totalPrice: 0,
     items: [],
 }
-type productId = {
+export type productId = {
     product_id: number;
 };
 
@@ -15,8 +15,14 @@ export const cartSlice = createSlice({
     initialState,
     reducers: {
         addToCart: (state, action: PayloadAction<TCartItem>) => {
+            const item = state.items.find((item) => item.product.id === action.payload.product.id)
+            if(item){
+                item.count++
+            }
+            else {
+                state.items.push(action.payload)
+            }
             state.totalPrice += action.payload.product.price;
-            state.items.push(action.payload)
         },
         setQuantity(state, action: PayloadAction<ISetQuantityCartItem>) {
             const item = state.items.find(item => item.product.id === action.payload.product_id);
@@ -32,13 +38,26 @@ export const cartSlice = createSlice({
             }
         },
         decrementQuantity(state, action: PayloadAction<productId>) {
-            const item = state.items.find(item => item.product.id === action.payload.product_id);
-            if(item){
-                item.count--
+            const item = state.items.find(
+                item => item.product.id === action.payload.product_id
+            );
+
+            if (item) {
+                if (item.count > 1) {
+                    item.count--;
+                }
+                else {
+                    state.items = state.items.filter(
+                        item => item.product.id !== action.payload.product_id
+                    );
+                }
             }
+        },
+        deleteProduct(state, action: PayloadAction<productId>) {
+            state.items = state.items.filter(item => item.product.id !== action.payload.product_id);
         }
-    }
+    },
 })
 
 export default cartSlice.reducer;
-export const {addToCart, decrementQuantity, setQuantity, incrementQuantity} = cartSlice.actions;
+export const {addToCart, decrementQuantity, setQuantity, incrementQuantity, deleteProduct} = cartSlice.actions;

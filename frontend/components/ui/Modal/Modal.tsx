@@ -1,4 +1,4 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import styles from "./Modal.module.css";
 import { Portal } from "@/components/ui/Portal/Portal";
 import { AnimatePresence, motion } from "framer-motion";
@@ -11,6 +11,22 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ children, isOpen, setIsOpen, title}) => {
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) =>{
+            if(event.key === "Escape"){
+                setIsOpen(false);
+            }
+        }
+        if(isOpen){
+            window.addEventListener("keydown", handleKeyDown);
+        }
+        return ()=>{
+            window.removeEventListener("keydown", handleKeyDown);
+        }
+    }, [isOpen, setIsOpen]);
+    if(!isOpen){
+        return null;
+    }
   return (
       <Portal>
         <AnimatePresence mode="wait">
