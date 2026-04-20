@@ -2,20 +2,27 @@
 import React from 'react';
 import {useAuth} from "@/features/auth/hooks/useAuth";
 import {useRouter} from "next/navigation";
+import Header from "@/components/layout/Header/Header";
+import Footer from "@/components/layout/Footer/Footer";
+import DashboardLayout from "@/components/dashboard/DashboardLayout/DashboardLayout";
 
 type DashBoardProps = object
 
 const DashBoard: React.FC<DashBoardProps> = ({  }) => {
-    const {isAuthenticated} = useAuth()
+    const {isAuthenticated, user, isError, isLoading} = useAuth()
     const router = useRouter()
-
-    if (!isAuthenticated) {
-        router.push("/not-authenticated")
+    if (isError) {
+        router.push("/")
     }
   return (
-    <div className="">
-
-    </div>
+    <>
+        {isLoading &&(
+            <h1>Loading</h1>
+        )}
+        <Header/>
+        <DashboardLayout user={user}/>
+        <Footer/>
+    </>
   );
 };
 

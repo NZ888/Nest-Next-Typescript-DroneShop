@@ -10,7 +10,6 @@ interface CartModalProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 }
-const key = Date.now()
 
 const CartModal: React.FC<CartModalProps> = ({ isOpen, setIsOpen }: CartModalProps) => {
     const items: ICartState = useAppSelector(selectCartItems)
@@ -22,7 +21,7 @@ const CartModal: React.FC<CartModalProps> = ({ isOpen, setIsOpen }: CartModalPro
                     ? <p className={styles.alert}>Ваш кошик порожній.
                         Почніть вибирати товари, щоб вони з’явилися тут</p>
                     : items.items.map((item) => {
-                        return (<CartItem key={key} item={item}/>)
+                        return (<CartItem key={item.product.id} item={item}/>)
                     })
             }
         </div>

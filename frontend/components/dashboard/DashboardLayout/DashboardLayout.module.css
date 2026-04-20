@@ -1,0 +1,25 @@
+.layout {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 81px;
+}
+.panel{
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+}
+.panel h2{
+    font-weight: 400;
+    font-size: 30px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: var(--blue-100);
+}
+
+.section{
+    width: 75%;
+}
