@@ -23,3 +23,20 @@
 .section{
     width: 75%;
 }
+.sectionSelect div p{
+    font-weight: 500;
+    font-size: 14px;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--blue-100);
+}
+.sectionSelect{
+    display: flex;
+    flex-direction: column;
+    gap: 44px;
+    padding-top: 44px;
+}
+.line{
+    border: 1px solid var(--secondary-100);
+    max-width: 321px;
+}
