@@ -3,7 +3,7 @@ import { createApi } from '@reduxjs/toolkit/query/react'
 import {baseQueryWithReauth} from "@/store/redux-toolkit/others/fetchAuthBaseQuery";
 
 export const authApi = createApi({
-    reducerPath: "/authApi",
+    reducerPath: "authApi",
     baseQuery: baseQueryWithReauth,
     tagTypes: ["Me"],
     endpoints: (builder) => ({
@@ -14,6 +14,14 @@ export const authApi = createApi({
             }),
             providesTags: ["Me"]
         }),
+        login: builder.mutation<void, {email: string; password: string}>({
+            query: (body)=>({
+                url: "auth/login",
+                method: "POST",
+                body
+            }),
+            invalidatesTags: ["Me"]
+        })
     })
 })
 export const {useGetMeQuery} = authApi

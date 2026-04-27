@@ -28,6 +28,8 @@ import {
     EmailVerifyFormValues, IRegisterData,
 } from "./types";
 
+import {authApi, useGetMeQuery} from "@/store/redux-toolkit/slices/auth/auth.slice"
+
 import { LoginScreen } from "./screens/LoginScreen";
 import { RegisterScreen } from "./screens/RegisterScreen";
 import { ResetScreen } from "./screens/ResetScreen";
@@ -36,9 +38,13 @@ import { NewPasswordScreen } from "./screens/NewPasswordScreen";
 import { VerifyEmailScreen } from "./screens/VerifyEmailScreen";
 import {EmailConfirmScreen} from "@/features/auth/components/AuthModal/screens/EmailConfirmScreen";
 import {useNotify} from "@/providers/NotificationProvider";
+import {useAppDispatch} from "@/store/redux-toolkit/hooks";
 
 export default function AuthModal({ isOpen, setIsOpen }: RegisterModalProps) {
     const [screen, setScreen] = React.useState<AuthScreen>("login");
+
+    const dispatch = useAppDispatch()
+    const {refetch} = useGetMeQuery();
 
     const goToLogin = () => setScreen("login");
     const goToRegister = () => setScreen("register");
@@ -86,8 +92,10 @@ export default function AuthModal({ isOpen, setIsOpen }: RegisterModalProps) {
             onError: (err: Error) => {
                 loginForm.setError("password", { message: err.message });
             },
-            onSuccess: () => {
+            onSuccess: async () => {
                 closeModal();
+                await dispatch(authApi.util.invalidateTags(["Me"]))
+                await refetch();
                 notify("Ви успішно увійшли, приємних закупівель!", "success", 5000)
             },
         });
