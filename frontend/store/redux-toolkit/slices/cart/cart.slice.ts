@@ -18,6 +18,7 @@ export const cartSlice = createSlice({
             const item = state.items.find((item) => item.product.id === action.payload.product.id)
             if(item){
                 item.count++
+                item.totalProductPrice = action.payload.product.price
             }
             else {
                 state.items.push(action.payload)
@@ -35,6 +36,9 @@ export const cartSlice = createSlice({
             const item = state.items.find(item => item.product.id === action.payload.product_id);
             if(item){
                 item.count++
+                item.totalProductPrice = item.count * item.product.price;
+                console.log(item.totalProductPrice)
+
             }
         },
         decrementQuantity(state, action: PayloadAction<productId>) {
@@ -45,6 +49,9 @@ export const cartSlice = createSlice({
             if (item) {
                 if (item.count > 1) {
                     item.count--;
+                    item.totalProductPrice = item.totalProductPrice - item.product.price;
+                    console.log(item.totalProductPrice)
+
                 }
                 else {
                     state.items = state.items.filter(

@@ -15,6 +15,8 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
     const {id, price, oldPrice, slug, name, mainImage} = item.product;
     const itemQuantity: number = useAppSelector(makeSelectItemQuantity(id))
     const dispatch = useAppDispatch()
+    const productPrice = itemQuantity * price;
+
 
     const deleteProductInReduxStore = ({product_id}: productId)=>{
         dispatch(deleteProduct({product_id}))
@@ -39,11 +41,11 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
                 {oldPrice
                     ?(
                         <div style={{display: "flex", gap: "12px"}}>
-                            <p className={styles.oldPrice}>{oldPrice}</p>
-                            <p className={styles.price}>{price}</p>
+                            <p className={styles.oldPrice}>{oldPrice * itemQuantity}</p>
+                            <p className={styles.price}>{productPrice}</p>
                         </div>
                     )
-                    : <p className={styles.price}>{price}</p>
+                    : <p className={styles.price}>{productPrice}</p>
                 }
 
             </div>
