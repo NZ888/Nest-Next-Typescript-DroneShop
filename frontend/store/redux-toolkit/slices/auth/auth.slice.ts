@@ -21,7 +21,8 @@ export const authApi = createApi({
                 body
             }),
             invalidatesTags: ["Me"]
-        })
+        }),
+
     })
 })
 export const {useGetMeQuery} = authApi

@@ -2,7 +2,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: start;
     padding-left: 40px;
     padding-right: 40px;
     padding-top: 81px;
@@ -28,6 +28,9 @@
     font-size: 14px;
     letter-spacing: 0.09em;
     text-transform: uppercase;
+    color: var(--blue-40);
+}
+.active{
     color: var(--blue-100);
 }
 .sectionSelect{
@@ -36,6 +39,7 @@
     gap: 44px;
     padding-top: 44px;
 }
+
 .line{
     border: 1px solid var(--secondary-100);
     max-width: 321px;

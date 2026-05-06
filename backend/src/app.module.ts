@@ -9,6 +9,7 @@ import { FeedbackModule } from './feedback/feedback.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { validationSchema } from '@/joi.env.validation';
 import { CacheModule } from '@nestjs/cache-manager';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { CacheModule } from '@nestjs/cache-manager';
     CloudinaryModule,
     ProductsModule,
     MailModule,
-    FeedbackModule
+    FeedbackModule,
+    UserModule
   ],
   controllers: [],
   providers: [],

@@ -1,4 +1,3 @@
-// import { useMe } from "../hooks/useAuthMutations";
 import {useGetMeQuery} from "@/store/redux-toolkit/slices/auth/auth.slice";
 
 export const useAuth = () => {

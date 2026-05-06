@@ -11,3 +11,15 @@ export interface IUser {
     uuid: string
     role: Role
 }
+
+export interface IUserAccountInfo{
+    uuid: string
+    email: string
+    name: string
+    surename: string | null
+    middleName: string | null
+    dateOfBirth: string | null
+    phone: string | null
+    role: Role
+}
+

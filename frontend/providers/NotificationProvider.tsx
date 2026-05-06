@@ -1,5 +1,6 @@
 "use client"
 
+import { AnimatePresence, motion } from "framer-motion";
 import React, {useContext, createContext, ReactNode, useState, useRef, useCallback, useMemo} from "react";
 import {createPortal} from "react-dom";
 
@@ -65,7 +66,14 @@ function NotificationViewport({notices, onClose}: { notices: Notice[]; onClose: 
     if (!mounted) return null;
 
     return createPortal(
-        <div style={styles.viewport}>
+        <AnimatePresence mode="wait">
+        <motion.div
+            style={styles.viewport}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+        >
             {notices.map((n) => (
                 <div
                     key={n.id}
@@ -79,7 +87,9 @@ function NotificationViewport({notices, onClose}: { notices: Notice[]; onClose: 
                     </button>
                 </div>
             ))}
-        </div>,
+        </motion.div>
+        </AnimatePresence>
+            ,
         document.body
     );
 }

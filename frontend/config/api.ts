@@ -21,6 +21,10 @@ export const API = {
             }
         },
 
+        user: {
+            getUserInfo: (userId: string | undefined) => `${env.NEXT_PUBLIC_BACKEND_URL}/info/${userId}`,
+        },
+
         auth: {
             login: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
             refresh: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/refresh`,

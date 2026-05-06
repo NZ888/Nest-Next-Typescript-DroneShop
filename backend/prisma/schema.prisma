@@ -17,6 +17,10 @@ model User {
   id           Int      @id @default(autoincrement()) @map("Technical id")
   uuid         String   @unique @default(uuid()) @map("Public uuid")
   name         String   @map("Name") @db.VarChar(30)
+  surename     String?
+  middleName   String?
+  dateOfBirth  String?
+  phone        String?
   email        String   @unique @map("Unique email") @db.VarChar(60)
   passwordHash String   @map("Hashed Password")
   role         Role     @default(USER) @map("Role")

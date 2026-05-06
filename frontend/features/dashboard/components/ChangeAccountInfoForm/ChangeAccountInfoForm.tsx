@@ -2,13 +2,27 @@ import React from 'react';
 import {useForm} from "react-hook-form";
 import {IUserInfo} from "@/features/dashboard/types/account";
 import styles from "./ChangeAccountInfoForm.module.css"
-type ChangeAccountInfoFormProps = object
+import SolidButton from "@/components/ui/SolidBtn/SolidButton";
+import GhostButton from "@/components/ui/GhostBtn/GhostButton";
+import {useNotify} from "@/providers/NotificationProvider";
+import {IUserAccountInfo} from "@/types/user";
+type ChangeAccountInfoFormProps = {
+    user?:IUserAccountInfo
+}
 
-const ChangeAccountInfoForm: React.FC<ChangeAccountInfoFormProps> = ({  }) => {
+const ChangeAccountInfoForm: React.FC<ChangeAccountInfoFormProps> = ({ user }) => {
     const changeAccountInfoForm = useForm<IUserInfo>({mode: "onChange"});
-    const {register, handleSubmit, formState: {errors}, control, reset} = changeAccountInfoForm;
+    const {register, handleSubmit, formState: {errors}, reset} = changeAccountInfoForm;
+    const notify = useNotify()
+
+    const handleChangeInfo = (data: IUserInfo) => {
+        console.log(data);
+        notify(`${data.name}, твої данні успішно оновлені!`, "success", 4000)
+    }
+
+
     return (
-    <form>
+    <form onSubmit={handleSubmit(handleChangeInfo)}>
         <div className={styles.formItem}>
             <p>Прізвище</p>
             <input
@@ -98,6 +112,10 @@ const ChangeAccountInfoForm: React.FC<ChangeAccountInfoFormProps> = ({  }) => {
             {errors.email?.message && (
                 <span className={styles.error}>{String(errors.email.message)}</span>
             )}
+        </div>
+        <div style={{marginTop: "20px", display:"flex", gap: "20px"}}>
+            <SolidButton type="submit">Зберегти зміни</SolidButton>
+            <GhostButton onClick={()=>reset()}>очистити</GhostButton>
         </div>
     </form>
   );
