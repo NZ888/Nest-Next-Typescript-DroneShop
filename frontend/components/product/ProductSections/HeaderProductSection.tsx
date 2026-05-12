@@ -1,7 +1,8 @@
-import {ISection} from "@/types/product";
+import type { CSSProperties } from "react";
+import { ISection } from "@/types/product";
 import YouTubePlayer from "@/components/ui/YouTubePlayer/YouTubePlayer";
 
-const styles = {
+const styles: Record<string, CSSProperties> = {
     container: {
         backgroundColor: 'white',
         width: '100vw',
@@ -19,7 +20,7 @@ const styles = {
         justifyContent: 'center',
         width: '50%',
     },
-    infoH2:{
+    infoH2: {
         fontSize: '44px',
         fontWeight: 400,
         fontFamily: 'var(--second-family)',
@@ -27,7 +28,7 @@ const styles = {
         textTransform: 'uppercase',
         textAlign: 'center',
     },
-    infoP:{
+    infoP: {
         fontSize: '16px',
         fontWeight: 400,
         fontFamily: 'var(--second-family)',
@@ -39,25 +40,21 @@ const styles = {
         width: '70%',
         height: '100%',
     }
-}
+};
 
-export default async function HeaderProductSection(section : ISection){
-    let videoUrl:string = "";
-    if(section.video){
-        videoUrl = section.video
-    }
+export default function HeaderProductSection(section: ISection) {
+    const videoUrl = section.video ?? "";
 
-    return(
-        <>
-            <div style={styles.container}>
-                <div style={styles.infoContainer}>
-                    <h2 style={styles.infoH2}>{section.title}</h2>
-                    <p>{section.text}</p>
-                </div>
-                <div style={styles.videoContainer}>
-                    <YouTubePlayer videoUrl={videoUrl}/>
-                </div>
+    return (
+        <div style={styles.container}>
+            <div style={styles.infoContainer}>
+                <h2 style={styles.infoH2}>{section.title}</h2>
+                <p style={styles.infoP}>{section.text}</p>
             </div>
-        </>
-    )
+
+            <div style={styles.videoContainer}>
+                <YouTubePlayer videoUrl={videoUrl} />
+            </div>
+        </div>
+    );
 }

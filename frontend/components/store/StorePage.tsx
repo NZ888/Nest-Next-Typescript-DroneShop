@@ -36,7 +36,6 @@ export default async function StorePage(){
     }
 
     const categories: ICategory[] = Array.from(categoriesMap.values());
-    console.log(categories);
     return (
         <>
             <Header/>

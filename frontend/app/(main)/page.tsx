@@ -1,4 +1,4 @@
-
+export const dynamic = "force-dynamic";
 import MainPage from "@/components/home/MainPage";
 
 export default async function Main() {

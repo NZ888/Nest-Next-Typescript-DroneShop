@@ -21,9 +21,10 @@ export default function IntroProductSection(product: IntroProductSectionProps){
             oldPrice: product.oldPrice,
             mainImage: product.mainImage,
             slug: product.slug,
-            id: product.id
+            id: product.id,
         },
-        count: 1
+        count: 1,
+        totalProductPrice: product.price
     }
     const addProductToReduxStore = ()=>{
         dispatch(addToCart(mayCartItem))

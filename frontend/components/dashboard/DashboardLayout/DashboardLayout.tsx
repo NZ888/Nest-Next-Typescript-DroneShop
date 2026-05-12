@@ -5,7 +5,6 @@ import {useState} from "react";
 import ContactsDashboard from "@/components/dashboard/ContactsDashboard/ContactsDashboard";
 import {logout} from "@/features/auth/services/auth.service";
 import {useRouter} from "next/navigation";
-import {useDispatch} from "react-redux";
 import {useAppDispatch} from "@/store/redux-toolkit/hooks";
 import {authApi} from "@/store/redux-toolkit/slices/auth/auth.slice";
 

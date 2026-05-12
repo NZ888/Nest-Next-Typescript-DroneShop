@@ -1,3 +1,5 @@
+import {env} from "@/config/env"
+
 export function svgToJsx(svg: string): string {
     const camel = (str: string): string =>
         str.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase());
@@ -50,4 +52,16 @@ export function getYoutubeEmbedUrl(url: string) {
     return videoId
         ? `https://www.youtube.com/embed/${videoId}`
         : "";
+}
+
+export function getBackendUrl() {
+    if (typeof window === "undefined") {
+        return env.BACKEND_URL ?? env.NEXT_PUBLIC_BACKEND_URL;
+    }
+
+    return env.NEXT_PUBLIC_BACKEND_URL;
+}
+
+export function apiUrl(path: string) {
+    return `${getBackendUrl()}${path}`;
 }

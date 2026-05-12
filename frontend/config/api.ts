@@ -1,49 +1,63 @@
-import { env } from "./env";
+import { apiUrl } from "@/lib/helpers";
 
 export const API = {
-    baseUrl: env.NEXT_PUBLIC_BACKEND_URL,
+    baseUrl: apiUrl(""),
 
     routes: {
         products: {
-            allProducts: (page?: number, limit?: number) => `${env.NEXT_PUBLIC_BACKEND_URL}/products?page=${page}&limit=${limit}`,
-            getSomeNewProducts: (quantity: number) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/new?quantity=${quantity}`,
-            getProduct: (slug: string) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/${slug}` ,
-            getProductsByCategorySlug: (cSlug: string, page?: number, limit?: number) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/byCategories/?page=${page}&limit=${limit}&categorySlug=${cSlug}`,
-            category:{
-                CRUD:{
-                    createCategory: `${env.NEXT_PUBLIC_BACKEND_URL}/products/categories`,
-                    deleteCategory: (slug: string) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/categories/${slug}` ,
-                    getAll: `${env.NEXT_PUBLIC_BACKEND_URL}/products/categories`,
+            allProducts: (page?: number, limit?: number) =>
+                apiUrl(`/products?page=${page}&limit=${limit}`),
+
+            getSomeNewProducts: (quantity: number) =>
+                apiUrl(`/products/new?quantity=${quantity}`),
+
+            getProduct: (slug: string) =>
+                apiUrl(`/products/${slug}`),
+
+            getProductsByCategorySlug: (cSlug: string, page?: number, limit?: number) =>
+                apiUrl(`/products/byCategories/?page=${page}&limit=${limit}&categorySlug=${cSlug}`),
+
+            category: {
+                CRUD: {
+                    createCategory: apiUrl(`/products/categories`),
+                    deleteCategory: (slug: string) =>
+                        apiUrl(`/products/categories/${slug}`),
+                    getAll: apiUrl(`/products/categories`),
                 },
-                setCategories: (slug: string) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/${slug}/categories`,
-                addCategoriesToExists: (slug: string) => `${env.NEXT_PUBLIC_BACKEND_URL}/products/${slug}/categories`,
-                getAllCategories: `${env.NEXT_PUBLIC_BACKEND_URL}/products/categories`,
-            }
+
+                setCategories: (slug: string) =>
+                    apiUrl(`/products/${slug}/categories`),
+
+                addCategoriesToExists: (slug: string) =>
+                    apiUrl(`/products/${slug}/categories`),
+
+                getAllCategories: apiUrl(`/products/categories`),
+            },
         },
 
         user: {
-            getUserInfo: (userId: string | undefined) => `${env.NEXT_PUBLIC_BACKEND_URL}/info/${userId}`,
+            getUserInfo: (userId: string | undefined) =>
+                apiUrl(`/user/info/${userId}`),
         },
 
         auth: {
-            login: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
-            refresh: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/refresh`,
-            logout:`${env.NEXT_PUBLIC_BACKEND_URL}/auth/logout`,
-            me: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/me`,
+            login: apiUrl(`/auth/login`),
+            refresh: apiUrl(`/auth/refresh`),
+            logout: apiUrl(`/auth/logout`),
+            me: apiUrl(`/auth/me`),
 
+            register: apiUrl(`/auth/register`),
+            sendEmailConfirmCode: apiUrl(`/auth/send-email-confirm-code`),
+            verifyEmailConfirmCode: apiUrl(`/auth/verify-email-confirm-code`),
 
-            register: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/register`,
-            sendEmailConfirmCode: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/send-email-confirm-code`,
-            verifyEmailConfirmCode: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/verify-email-confirm-code`,
-
-            sendResetCode: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/send-reset-code`,
-            verifyResetCode: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/verify-reset-code`,
-            resetPassword: `${env.NEXT_PUBLIC_BACKEND_URL}/auth/reset-password`,
+            sendResetCode: apiUrl(`/auth/send-reset-code`),
+            verifyResetCode: apiUrl(`/auth/verify-reset-code`),
+            resetPassword: apiUrl(`/auth/reset-password`),
         },
 
-        feedback:{
-            sendFeedback:`${env.NEXT_PUBLIC_BACKEND_URL}/feedback/send`,
-            getFeedbacks:`${env.NEXT_PUBLIC_BACKEND_URL}/feedback/get`,
-        }
+        feedback: {
+            sendFeedback: apiUrl(`/feedback/send`),
+            getFeedbacks: apiUrl(`/feedback/get`),
+        },
     },
 };
