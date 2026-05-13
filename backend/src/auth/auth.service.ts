@@ -9,15 +9,22 @@ import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
 import { Role } from '../../generated/prisma/enums'
 import { ILogin, IRegister } from "@/auth/interfaces/auth.interfaces";
-import { MailService } from "@/mail/mail.service";
 import { randomUUID } from "crypto";
+import { InjectQueue } from '@nestjs/bullmq';
+import {
+  SEND_EMAIL,
+  SEND_EMAIL_CONFIRM_JOB,
+  SEND_RESET_CODE_JOB,
+} from '@/auth/common/constants';
+import { Queue } from 'bullmq';
 
 @Injectable()
 export class AuthService {
   constructor(
       private prisma: PrismaService,
       private jwt: JwtService,
-      private mail: MailService
+      // private mail: MailService
+      @InjectQueue(SEND_EMAIL) private sendEmailQueue: Queue
   ) {}
 
   // @ts-ignore
@@ -129,7 +136,8 @@ export class AuthService {
     });
 
     if (!user) throw new BadRequestException("Користувача не знайдено");
-
+    const userId = user.uuid
+    const userEmail = user.email
     const code = Math.floor(100000 + Math.random() * 900000).toString();
 
     await this.prisma.resetCode.upsert({
@@ -137,8 +145,19 @@ export class AuthService {
       create: { email, code },
       update: { code, attempts: 0 }
     });
-
-    await this.mail.sendResetCode(email, code);
+    await this.sendEmailQueue.add(SEND_RESET_CODE_JOB,
+      {userId: userId, code: code, email: userEmail},
+      {
+        backoff: {
+          type: "fixed",
+          delay: 100 * 60
+        },
+        jobId: userId,
+        removeOnComplete: true,
+        attempts: 3
+      }
+    )
+    // await this.mail.sendResetCode(email, code);
 
     return { message: "Код надіслано" };
   }
@@ -207,13 +226,21 @@ export class AuthService {
 
     const code = Math.floor(100000 + Math.random() * 900000).toString();
 
-    await this.prisma.confirmEmailCode.upsert({
+     await this.prisma.confirmEmailCode.upsert({
       where: { email },
       create: { email, code, attempts: 0 },
       update: { code, attempts: 0 }
     });
-
-    await this.mail.sendEmailConfirm(email, code);
+    await this.sendEmailQueue.add(SEND_EMAIL_CONFIRM_JOB, {email: email, code: code}, {
+      backoff: {
+        type: "fixed",
+        delay: 100 * 60
+      },
+      removeOnComplete: true,
+      attempts: 3,
+      jobId: email
+    });
+    // await this.mail.sendEmailConfirm(email, code);
     return { message: "Код надіслано" };
   }
 

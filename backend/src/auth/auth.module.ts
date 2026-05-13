@@ -6,6 +6,9 @@ import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt/jwt.strategy';
 import {MailModule} from "@/mail/mail.module";
+import { BullModule } from '@nestjs/bullmq';
+import { SEND_EMAIL } from '@/auth/common/constants';
+import { AuthProcessor } from '@/auth/auth.processor';
 
 @Module({
   imports: [
@@ -20,11 +23,13 @@ import {MailModule} from "@/mail/mail.module";
         signOptions: { expiresIn: '20m' },
       }),
     }),
+    BullModule.registerQueue({name:SEND_EMAIL})
   ],
   controllers: [AuthController],
   providers: [
     AuthService,
     JwtStrategy,
+    AuthProcessor
   ],
   exports: [AuthService, JwtModule, PassportModule],
 })

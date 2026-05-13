@@ -10,6 +10,8 @@ import { ThrottlerModule } from '@nestjs/throttler';
 import { validationSchema } from '@/joi.env.validation';
 import { CacheModule } from '@nestjs/cache-manager';
 import { UserModule } from './user/user.module';
+import {BullModule} from "@nestjs/bullmq"
+import { RedisModule } from '@/redis/redis.module';
 
 @Module({
   imports: [
@@ -18,6 +20,7 @@ import { UserModule } from './user/user.module';
       validationSchema,
       validationOptions: {abortEarly: false},
     }),
+    RedisModule,
     ThrottlerModule.forRoot([{
       ttl: 60,
       limit: 10,
@@ -31,7 +34,12 @@ import { UserModule } from './user/user.module';
     ProductsModule,
     MailModule,
     FeedbackModule,
-    UserModule
+    UserModule,
+    BullModule.forRoot({
+      connection: {
+
+      }
+    })
   ],
   controllers: [],
   providers: [],

@@ -49,7 +49,13 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
-
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight
+    ports:
+      - "5540:5540"
+    depends_on:
+      - redis
   postgres:
     image: postgres:16
     container_name: drone_postgres

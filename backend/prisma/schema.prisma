@@ -72,9 +72,16 @@ model Section {
   product   Product @relation(fields: [productId], references: [id])
 }
 
+enum CodeState {
+  NOT_EVEN_SEND
+  SENDING
+  SENDED
+}
+
 model ResetCode {
   email               String    @id
   code                String
+  codeState           CodeState @default(NOT_EVEN_SEND)
   attempts            Int       @default(0)
   resetToken          String?   @unique
   resetTokenExpiresAt DateTime?
@@ -84,6 +91,7 @@ model ResetCode {
 model ConfirmEmailCode {
   email                 String    @id
   code                  String
+  codeState             CodeState @default(NOT_EVEN_SEND)
   attempts              Int       @default(0)
   confirmToken          String?   @unique
   confirmTokenExpiresAt DateTime?

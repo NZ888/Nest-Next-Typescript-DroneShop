@@ -1,14 +1,14 @@
-import {BadRequestException, HttpException, HttpStatus, Inject, Injectable, NotFoundException,} from '@nestjs/common';
+import {BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException,} from '@nestjs/common';
 import {CreateProductDto} from '@/products/dto/create-product.dto';
 import {PrismaService} from '@/prisma/prisma.service';
 import {CloudinaryService} from '@/cloudinary/cloudinary.service';
 import {SetProductCategoriesDto} from '@/products/dto/set-product-category.dto';
 import {CreateCategoryDto} from '@/products/dto/create-category.dto';
-import { CACHE_MANAGER, Cache } from '@nestjs/cache-manager';
 import { CacheKeys } from '../../common/constants/cache-key';
+import { RedisService } from '@/redis/redis.service';
 @Injectable()
 export class ProductsService {
-  constructor(private prisma: PrismaService, private cloudinaryService: CloudinaryService, @Inject(CACHE_MANAGER) private readonly cache:Cache) {}
+  constructor(private prisma: PrismaService, private cloudinaryService: CloudinaryService, private redis: RedisService) {}
   async createProduct(dto: CreateProductDto) {
       const sections = (dto.sections ?? [])
           .filter((s: any) => s && (s.title || s.text || s.image || s.video) && s.order !== undefined && s.order !== null)
@@ -257,13 +257,12 @@ export class ProductsService {
     return { ok: true };
   }
   async getAllCategories() {
-      const cachedCategories = await this.cache.get(CacheKeys.categories)
+      const cachedCategories = await this.redis.get(CacheKeys.categories)
+
       if(cachedCategories !== undefined && cachedCategories !== null){
-          console.log(cachedCategories)
-        console.log("Cached!")
         return cachedCategories
       }
-      console.log(cachedCategories)
+
 
     const categories = await this.prisma.category.findMany({
         select: {
@@ -274,7 +273,7 @@ export class ProductsService {
           products: true,
         },
       });
-      await this.cache.set(CacheKeys.categories, categories, 60 * 60 * 1000)
+      await this.redis.set(CacheKeys.categories, categories, 60 * 60 * 1000)
       return categories
   }
 }
