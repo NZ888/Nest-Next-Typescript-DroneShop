@@ -73,7 +73,6 @@ export class MailService {
             </p>
 
         </div>`,
-
       })
     }
 }

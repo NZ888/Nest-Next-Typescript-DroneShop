@@ -99,10 +99,11 @@ model ConfirmEmailCode {
 }
 
 model Feedback {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
   phone     String
   email     String
   message   String
-  createdAt DateTime @default(now())
+  codeState CodeState @default(NOT_EVEN_SEND)
+  createdAt DateTime  @default(now())
 }

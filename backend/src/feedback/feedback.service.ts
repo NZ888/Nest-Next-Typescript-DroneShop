@@ -2,10 +2,16 @@ import { HttpStatus, Injectable } from '@nestjs/common';
 import {PrismaService} from "@/prisma/prisma.service";
 import {FeedbackDto} from "@/feedback/dto/feedback.dto";
 import {MailService} from "@/mail/mail.service";
+import { InjectQueue } from '@nestjs/bullmq';
+import {
+  SEND_FEEDBACK_JOB,
+  SEND_FEEDBACK_QUEUE,
+} from '@/feedback/common/constants';
+import { Queue } from 'bullmq';
 
 @Injectable()
 export class FeedbackService {
-    constructor(private prisma: PrismaService, private mailService: MailService) {}
+    constructor(private prisma: PrismaService, private mailService: MailService, @InjectQueue(SEND_FEEDBACK_QUEUE) private feedbackQueue: Queue) {}
 
     async pushFeedback(feedback: FeedbackDto){
         const saved = await this.prisma.feedback.create({
@@ -16,7 +22,22 @@ export class FeedbackService {
                 email: feedback.email
             },
         });
-        await this.mailService.sendFeedbackToAdminsEmail(feedback.email, feedback.message, feedback.phone, feedback.name);
+        await this.feedbackQueue.add(SEND_FEEDBACK_JOB, {
+          email: feedback.email,
+          message: feedback.message,
+          phone: feedback.phone,
+          name: feedback.name
+        }, {
+          backoff: {
+            type: "fixed",
+            delay: 5000,
+          },
+          removeOnComplete: true,
+          jobId: feedback.email,
+          attempts: 3,
+        })
+
+        // await this.mailService.sendFeedbackToAdminsEmail(feedback.email, feedback.message, feedback.phone, feedback.name);
 
         return saved;
     }
